@@ -147,7 +147,6 @@ const InvoiceDetail = () => {
                                         </small>
                                     </div>
                                 </Col>
-
                                 <Col sm={6}>
                                     <div className="float-right mt-4">
                                         <p><span className="font-weight-medium">Sub-total:</span> <span
