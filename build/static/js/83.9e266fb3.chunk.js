@@ -1,0 +1,2 @@
+(this["webpackJsonpxiahe-react"] = this["webpackJsonpxiahe-react"] || []).push([[83], { 1078: function (e, t, s) { "use strict"; s.r(t); var n = s(0), r = s.n(n), a = s(25); class c extends n.Component { render() { const e = this.props.children || null; return r.a.createElement(n.Suspense, { fallback: r.a.createElement("div", { className: "text-center" }) }, e) } } t.default = Object(a.b)()(c) } }]);
+//# sourceMappingURL=83.9e266fb3.chunk.js.map

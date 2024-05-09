@@ -1,0 +1,1054 @@
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Card, CardBody, Media, Nav, NavItem, NavLink, TabContent, TabPane, } from 'reactstrap';
+import ImageUpload from './ImageHandler';
+import CatalogProducts from '../catalog/CatalogProducts';
+import { DownOutlined } from '@ant-design/icons';
+import ReactQuill from 'react-quill';
+import MediaLib from './MediaLib';
+import uuid from 'react-uuid';
+
+import { Cookies } from 'react-cookie';
+import { fetchJSON } from '../../../helpers/api';
+
+import "react-quill/dist/quill.snow.css";
+
+import classNames from 'classnames';
+import {
+    Button,
+    Switch,
+    Form,
+    Input,
+    Select,
+    Tree,
+    Space,
+    Alert
+} from 'antd';
+
+const { Option } = Select;
+
+const formItemLayout = {
+    labelCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 8,
+        },
+    },
+    wrapperCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 16,
+        },
+    },
+};
+const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0,
+        },
+        sm: {
+            span: 16,
+            offset: 8,
+        },
+    },
+};
+
+const modules = {
+    toolbar: [
+        [{ header: [1, 2, false] }],
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+        ],
+        ["link", "code"],
+        ["clean"],
+    ],
+};
+
+const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "code",
+];
+
+const CatalogEffect = (props) => {
+    const [form] = Form.useForm();
+
+    const { treeData, initialValues, onFinish, handleFileListChange, activeTab, fileList, toggleTab, handleTreeSelect,
+        catalog_active, catalog_enable, catalog_name, catalog_intro, catalog_description, onEditorContentChange } = props;
+
+    const [catalogTree, setCatalogTree] = useState([
+        {
+            title: 'ex-hub 2025',
+            value: 'ex-hub-2025',
+            key: '0-0',
+            children: [
+                {
+                    title: '',
+                    value: '',
+                    key: '0-0-0',
+                    children: [
+
+                    ],
+                },
+            ],
+        },
+    ]);
+    const [catalogNodeSelect, setCatalogNode] = useState([]);
+    const [expandedKeys] = useState(['0-0-0']);
+    const [newCatalogInfo, setInfo] = useState(false);
+    const [newNode, setNewNode] = useState({});
+
+    const [fileLibraryList, setFileLibraryList] = useState([]);
+    const [fileSelectedList, setSelectedList] = useState([]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        const catalogListUrl = '/catalog/list?vendor_id=6';
+        const catalogItemUrl = '/catalog/';
+        const catalogDelUrl = '/catalog/delete/:id';
+
+        const fetchTree = [
+            {
+                "id": 5,
+                "vendor_id": 6,
+                "title": "ex-hub root",
+                "value": "ex-hub-root",
+                "key": "0-0",
+                "activate": true,
+                "children": [
+                    {
+                        "title": "Clothing & Apparel123",
+                        "value": "clothing-apparel",
+                        "key": "0-0-0",
+                        "activate": true,
+                        "enable": true,
+                        "short_desc": "",
+                        "long_desc": "",
+                        "template": "",
+                        "image": [
+                            {
+                                "_id": 1,
+                                "title": "Cat 300x300",
+                                "size": 294880,
+                                "fileName": "cat300.jpg",
+                                "type": "image/jpeg",
+                                "createdAt": "",
+                                "thumbnailUrl": "https://placekitten.com/300/300"
+                            },
+                            {
+                                "_id": 2,
+                                "title": "Cat 500x500",
+                                "size": 864483,
+                                "fileName": "cat500.jpg",
+                                "type": "image/jpeg",
+                                "createdAt": "",
+                                "thumbnailUrl": "https://placekitten.com/500/500"
+                            }
+                        ],
+                        "children": [
+                            {
+                                "title": "Accessories",
+                                "value": "accessories",
+                                "key": "0-0-0-0",
+                                "activate": true,
+                                "enable": true,
+                                "short_desc": "",
+                                "long_desc": "",
+                                "template": "",
+                                "image": [
+                                    {
+                                        "_id": 1,
+                                        "title": "Cat 300x300",
+                                        "size": 294880,
+                                        "fileName": "cat300.jpg",
+                                        "type": "image/jpeg",
+                                        "createdAt": "",
+                                        "thumbnailUrl": "https://placekitten.com/300/300"
+                                    }
+                                ]
+                            },
+                            {
+                                "title": "Bags",
+                                "value": "bags",
+                                "key": "0-0-0-1",
+                                "activate": true,
+                                "enable": true,
+                                "short_desc": "",
+                                "long_desc": "",
+                                "template": "",
+                                "image": [
+                                    {
+                                        "_id": 1,
+                                        "title": "Cat 300x300",
+                                        "size": 294880,
+                                        "fileName": "cat300.jpg",
+                                        "type": "image/jpeg",
+                                        "createdAt": "",
+                                        "thumbnailUrl": "https://placekitten.com/300/300"
+                                    },
+                                    {
+                                        "_id": 2,
+                                        "title": "Cat 500x500",
+                                        "size": 864483,
+                                        "fileName": "cat500.jpg",
+                                        "type": "image/jpeg",
+                                        "createdAt": "",
+                                        "thumbnailUrl": "https://placekitten.com/500/500"
+                                    }
+                                ]
+                            },
+                            {
+                                "title": "Kid's Fashion",
+                                "value": "kids-fashion",
+                                "key": "0-0-0-2"
+                            },
+                            {
+                                "title": "Mens",
+                                "value": "mens",
+                                "key": "0-0-0-3",
+                                "activate": true,
+                                "enable": true,
+                                "short_desc": "",
+                                "long_desc": "",
+                                "template": "",
+                                "image": [
+                                    {
+                                        "_id": 1,
+                                        "title": "Cat 300x300",
+                                        "size": 294880,
+                                        "fileName": "cat300.jpg",
+                                        "type": "image/jpeg",
+                                        "createdAt": "",
+                                        "thumbnailUrl": "https://placekitten.com/300/300"
+                                    },
+                                    {
+                                        "_id": 2,
+                                        "title": "Cat 500x500",
+                                        "size": 864483,
+                                        "fileName": "cat500.jpg",
+                                        "type": "image/jpeg",
+                                        "createdAt": "",
+                                        "thumbnailUrl": "https://placekitten.com/500/500"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Garden & Kitchen",
+                        "value": "garden-kitchen",
+                        "key": "0-0-1",
+                        "activate": true,
+                        "enable": true,
+                        "short_desc": "",
+                        "long_desc": "",
+                        "template": "",
+                        "image": [
+                            {
+                                "_id": 1,
+                                "title": "Cat 300x300",
+                                "size": 294880,
+                                "fileName": "cat300.jpg",
+                                "type": "image/jpeg",
+                                "createdAt": "",
+                                "thumbnailUrl": "https://placekitten.com/300/300"
+                            },
+                            {
+                                "_id": 2,
+                                "title": "Cat 500x500",
+                                "size": 864483,
+                                "fileName": "cat500.jpg",
+                                "type": "image/jpeg",
+                                "createdAt": "",
+                                "thumbnailUrl": "https://placekitten.com/500/500"
+                            }
+                        ],
+                        "children": [
+                            {
+                                "title": "Cookware",
+                                "value": "cookware",
+                                "key": "0-0-1-0"
+                            },
+                            {
+                                "title": "Decoration",
+                                "value": "decoration",
+                                "key": "0-0-1-1",
+                                "activate": true,
+                                "enable": true,
+                                "short_desc": "",
+                                "long_desc": "",
+                                "template": "",
+                                "image": [
+                                    {
+                                        "_id": 1,
+                                        "title": "Cat 300x300",
+                                        "size": 294880,
+                                        "fileName": "cat300.jpg",
+                                        "type": "image/jpeg",
+                                        "createdAt": "",
+                                        "thumbnailUrl": "https://placekitten.com/300/300"
+                                    },
+                                    {
+                                        "_id": 2,
+                                        "title": "Cat 500x500",
+                                        "size": 864483,
+                                        "fileName": "cat500.jpg",
+                                        "type": "image/jpeg",
+                                        "createdAt": "",
+                                        "thumbnailUrl": "https://placekitten.com/500/500"
+                                    }
+                                ]
+                            },
+                            {
+                                "title": "Furniture",
+                                "value": "furniture",
+                                "key": "0-0-1-2"
+                            },
+                            {
+                                "title": "Garden Tools",
+                                "value": "garden-tools",
+                                "key": "0-0-1-3"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Consumer Electrics",
+                        "value": "consumer-electrics",
+                        "key": "0-0-2",
+                        "children": [
+                            {
+                                "title": "Air Conditioners",
+                                "value": "air-conditioners",
+                                "key": "0-0-2-0"
+                            },
+                            {
+                                "title": "Audios & Theaters",
+                                "value": "audios-theaters",
+                                "key": "0-0-2-1"
+                            },
+                            {
+                                "title": "Car Electronics",
+                                "value": "car-electronics",
+                                "key": "0-0-2-2"
+                            },
+                            {
+                                "title": "Office Electronics",
+                                "value": "office-electronics",
+                                "key": "0-0-2-3"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const getDatas = async () => {
+            let currentTree = [];
+            const response = await getApiData(catalogItemUrl, '5');
+            const data = await response;
+            currentTree.push(data);
+
+            setCatalogTree(currentTree);
+        }
+        getDatas()
+
+        //setCatalogTree(fetchTree);
+        setInfo(false);
+        setNewNode({
+            title: 'newNode1',
+            value: 'newNode1',
+            desc: '',
+            image_url: '',
+            key: '0',
+        })
+        setFileLibraryList([
+            {
+                _id: 1,
+                title: 'Cat 300x300',
+                size: 294880,
+                fileName: 'cat300.jpg',
+                type: 'image/jpeg',
+                createdAt: new Date('2022-10-17T03:12:29.866Z'),
+                thumbnailUrl: 'https://placekitten.com/300/300',
+            },
+            {
+                _id: 2,
+                title: 'Cat 500x500',
+                size: 864483,
+                fileName: 'cat500.jpg',
+                type: 'image/jpeg',
+                createdAt: new Date('2022-10-17T03:12:45.018Z'),
+                thumbnailUrl: 'https://placekitten.com/500/500',
+            },
+            {
+                _id: 3,
+                title: 'Cat 600x600',
+                size: 586458,
+                fileName: 'cat600.jpg',
+                type: 'image/jpeg',
+                createdAt: new Date('2022-10-17T03:19:33.498Z'),
+                thumbnailUrl: 'https://placekitten.com/600/600',
+            },
+            {
+                _id: 4,
+                title: 'Cat 800x800',
+                size: 894665,
+                fileName: 'photo-107.jpg',
+                type: 'image/jpeg',
+                createdAt: new Date('2022-10-17T03:28:39.723Z'),
+                thumbnailUrl: 'https://placekitten.com/800/800',
+            },
+        ]);
+        setSelectedList([
+            {
+                _id: 1,
+                title: 'Cat 300x300',
+                size: 294880,
+                fileName: 'cat300.jpg',
+                type: 'image/jpeg',
+                createdAt: new Date('2022-10-17T03:12:29.866Z'),
+                thumbnailUrl: 'https://placekitten.com/300/300',
+            },
+            {
+                _id: 2,
+                title: 'Cat 500x500',
+                size: 864483,
+                fileName: 'cat500.jpg',
+                type: 'image/jpeg',
+                createdAt: new Date('2022-10-17T03:12:45.018Z'),
+                thumbnailUrl: 'https://placekitten.com/500/500',
+            },
+        ]);
+    }, []);
+
+    const getApiData = async (apiUrl, id) => {
+        let cookies = new Cookies();
+        let token = cookies.get('token');
+        let url = apiUrl;
+        if (id) {
+            url = apiUrl + id;
+        }
+
+        let options = {
+            method: "GET",
+            headers: {
+                'Authorization': token,
+            },
+        }
+        var res = await fetchJSON(url, options);
+
+        return res;
+    }
+
+    const saveApiData = async (apiUrl, incomeTree) => {
+        let cookies = new Cookies();
+        let token = cookies.get('token');
+        let tree = { ...incomeTree };
+        //tree = incomeTree;
+        let dataStr = JSON.stringify(tree);
+
+        let formdata = new FormData();
+        formdata.append('data', dataStr);
+        console.log('post json string:', dataStr);
+        var method = "POST";
+        var url = apiUrl;
+        var body = formdata;
+        var headers = {
+            'Authorization': token,
+        }
+        let options = {
+            headers: headers,
+            body: body,
+            method: method,
+        }
+        var res = fetchJSON(url, options).then(data => {
+            return data;
+        })
+        return res;
+    }
+
+    const handleInnerTreeSelect = (selectedKeys) => {
+
+        setCatalogNode(selectedKeys);
+        setInfo(false);
+        toggleTab('detail');
+        const tempdata = [...catalogTree];
+        let findNode = null;
+        //FindCurrentNode(tempdata, selectedKeys[0], findNode);
+        FindCurrentNode(catalogTree, selectedKeys[0], findNode);
+        console.log('find object:', findNode);
+
+        // const j = items.find(item => item.id === value);
+
+        // form.setFieldsValue({
+        //     catalog_active: false,
+        //     catalog_enable: true,
+        //     catalog_name: selectedKeys[0],
+        //     catalog_intro: 'catalog_intro',
+        //     catalog_description: 'catalog_description',
+        // });
+    }
+
+    const handleAddChild = () => {
+        //form.resetFields();
+        //setExpandedKeys(catalogNodeSelect[0]);
+        //setExpandedKeys(catalogNodeSelect);
+
+        form.setFieldsValue({
+            catalog_active: false,
+            catalog_enable: true,
+            catalog_name: '',
+            catalog_intro: '',
+            catalog_description: '',
+        });
+        setInfo(true);
+        // console.log('current Tree node:', catalogNodeSelect[0]);
+        // const copyTree = [...catalogTree];
+        // let currentTree = AddNewNode(copyTree, catalogNodeSelect[0]);
+        // console.log('current tree add:', currentTree);
+        //setCatalogTree(currentTree);
+    }
+
+    const handleDeleteCurrent = (values) => {
+        const copyTree = [...catalogTree];
+        const catalogSaveUrl = '/catalog/save';
+        let currentTree = DeleteCurrentNode(copyTree, catalogNodeSelect[0]);
+
+        console.log('current tree:', currentTree);
+        const saveDatas = async () => {
+            let postedData = {};
+            postedData = currentTree[0];
+            console.log('posted tree:', postedData);
+            await saveApiData(catalogSaveUrl, postedData).then((data) => {
+                console.log('save tree response:', data);
+                let refreshedTree = [];
+                refreshedTree.push(data);
+                setCatalogTree(refreshedTree);
+            }).catch((error) => {
+                console.log('save error:', error);
+            });
+
+        }
+        saveDatas()
+
+        form.resetFields();
+        //setCatalogTree(currentTree);
+        setSelectedList([]);
+    }
+
+    const AddNewNode = (data, key, node, chlidnode) => {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i] && data[i].key === key) {
+                if (data[i].children) {
+                    data[i].children.push(node);
+                }
+                else {
+                    console.log('copy childnode:', chlidnode);
+                    data[i] = { ...data[i], ...chlidnode };
+                }
+            }
+            if (data[i] && data[i].children) {
+                AddNewNode(data[i].children, key, node, chlidnode);
+            }
+        }
+        return data;
+    };
+
+    const DeleteCurrentNode = (data, key) => {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i] && data[i].key === key) {
+                console.log('current value:', data[i]);
+                data.splice(i, 1);
+                //delete data[i];
+            }
+            if (data[i] && data[i].children) {
+                DeleteCurrentNode(data[i].children, key);
+            }
+        }
+        return data = data.filter(function (x) { return x !== null });
+    };
+
+    const FindCurrentNode = (data, key, findNode) => {
+
+        for (let i = 0; i < data.length; i++) {
+            if (data[i] && data[i].key === key) {
+                findNode = data[i];
+                form.setFieldsValue({
+                    catalog_active: false,
+                    catalog_enable: true,
+                    catalog_name: data[i].title,
+                    catalog_intro: data[i].short_desc,
+                    catalog_description: data[i].long_desc,
+                });
+                setSelectedList(data[i].image ? data[i].image : null);
+                break;
+            }
+            if (data[i] && data[i].children) {
+                FindCurrentNode(data[i].children, key);
+            }
+        }
+    };
+
+    const [file, setFile] = useState(null);
+
+    let catalogValue = [];
+    const findCatalogFromKey = (originalJson) => {
+
+        for (var key in originalJson) {
+            if (originalJson.hasOwnProperty(key)) {
+                var value = originalJson[key];
+                if (typeof value === 'object' && value !== null) {
+                    if (value.key === catalogNodeSelect[0]) {
+                        if (typeof value.value !== 'undefined') {
+                            console.log('current children3', value.value);
+                            catalogValue.push(value.value);
+                        }
+                    }
+                    findCatalogFromKey(value);
+                }
+            }
+
+        }
+        return catalogValue;
+    }
+
+    const onDragEnter = (info) => {
+        console.log(info);
+        // expandedKeys, set it when controlled is needed
+        // setExpandedKeys(info.expandedKeys)
+    };
+
+    const onDrop = (info) => {
+        console.log(info);
+        const dropKey = info.node.key;
+        const dragKey = info.dragNode.key;
+        const dropPos = info.node.pos.split('-');
+        const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
+        const loop = (data, key, callback) => {
+            for (let i = 0; i < data.length; i++) {
+                if (data[i] && data[i].key === key) {
+                    return callback(data[i], i, data);
+                }
+                if (data[i] && data[i].children) {
+                    loop(data[i].children, key, callback);
+                }
+            }
+        };
+        const data = [...catalogTree];
+
+        // Find dragObject
+        let dragObj;
+        loop(data, dragKey, (item, index, arr) => {
+            arr.splice(index, 1);
+            dragObj = item;
+        });
+        if (!info.dropToGap) {
+            // Drop on the content
+            loop(data, dropKey, (item) => {
+                item.children = item.children || [];
+                // where to insert. New item was inserted to the start of the array in this example, but can be anywhere
+                item.children.unshift(dragObj);
+            });
+        } else if (
+            (info.node.props.children || []).length > 0 &&
+            // Has children
+            info.node.props.expanded &&
+            // Is expanded
+            dropPosition === 1 // On the bottom gap
+        ) {
+            loop(data, dropKey, (item) => {
+                item.children = item.children || [];
+                // where to insert. New item was inserted to the start of the array in this example, but can be anywhere
+                item.children.unshift(dragObj);
+                // in previous version, we use item.children.push(dragObj) to insert the
+                // item to the tail of the children
+            });
+        } else {
+            let ar = [];
+            let i;
+            loop(data, dropKey, (_item, index, arr) => {
+                ar = arr;
+                i = index;
+            });
+            if (dropPosition === -1) {
+                ar.splice(i, 0, dragObj);
+            } else {
+                ar.splice(i + 1, 0, dragObj);
+            }
+        }
+        console.log('new node after position change:', data);
+        setCatalogTree(data);
+    };
+
+    const onSubmit = (values) => {
+        console.log('Received values of form: ', values);
+        const catalogSaveUrl = '/catalog/save';
+        const copyTree = [...catalogTree];
+
+        if (newCatalogInfo) {
+
+            const newNode = {
+                title: values.catalog_name,
+                value: values.catalog_name,
+                short_desc: values.catalog_intro,
+                image_url: '',
+                key: uuid(),
+            }
+            const newchildNode = {
+                children: [newNode]
+            };
+
+            console.log('new node:', newchildNode);
+
+            let currentTree = AddNewNode(copyTree, catalogNodeSelect[0], newNode, newchildNode);
+            console.log('current tree add:', currentTree);
+
+            const saveDatas = async () => {
+                let postedData = {};
+                postedData = currentTree[0];
+                console.log('posted tree:', postedData);
+                let res = await saveApiData(catalogSaveUrl, postedData);
+                console.log('save tree response0:', res);
+                if (res) {
+                    console.log('save tree response1:', res);
+                    let responseData = [];
+                    responseData.push(res);
+                    setCatalogTree(responseData);
+                }
+
+            }
+            saveDatas()
+
+            //setCatalogTree(currentTree);
+        }
+        else {
+
+        }
+
+
+    };
+
+    const onFileSelect = (item) => {
+        console.log('selectCallback:', item);
+        setSelectedList(item);
+    }
+
+    const notification = "您将在所选择的当前类目[ " + findCatalogFromKey(catalogTree)[0] + " ]下建立一个新的子目录，提交信息之后刷新更新菜单。";
+
+    return (
+        <Form
+            {...formItemLayout}
+            form={form}
+            // initialValues={{
+            //     catalog_treecatalog: ['0-0-0-2'],
+            //     catalog_active: false,
+            //     catalog_enable: true,
+            //     catalog_name: '',
+            //     catalog_intro: '',
+            //     catalog_description: '',
+            // }}
+            name="catalog_form"
+            onFinish={onSubmit}
+            labelCol={{
+                span: 4,
+            }}
+            wrapperCol={{
+                span: 18,
+            }}
+            scrollToFirstError
+        >
+            <Row>
+                <Col xl={3}>
+                    <Row>
+                        <Col md={12}>
+                            <Card >
+                                <CardBody style={{ backgroundColor: "#f7f7f7" }}>
+                                    <Row>
+                                        <Col>
+                                            <React.Fragment>
+
+                                                <Media className="mt-2 mb-2 p-3" style={{ backgroundColor: "#fff" }}>
+                                                    <Media body >
+                                                        <Form.Item name="catalog_treecatalog" className="mt-0 mb-0 p-2">
+                                                            <h6 className="mt-0 mb-2 header-title">选择所属类目</h6>
+                                                            <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                                                按照建立的类目建立同级类目或者子级类目</p>
+
+                                                            <Tree
+                                                                showLine
+                                                                switcherIcon={<DownOutlined />}
+                                                                defaultExpandedKeys={expandedKeys}
+                                                                //defaultSelectedKeys={expandedKeys}
+                                                                //defaultExpandedKeys={['0-0-0-2']}
+                                                                //defaultExpandParent={['0-0-0-2']}
+                                                                //expandedKeys={['0-0-0-2']}
+                                                                //defaultExpandAll
+                                                                draggable
+                                                                //blockNode
+                                                                onDragEnter={onDragEnter}
+                                                                onDrop={onDrop}
+                                                                //defaultSelectedKeys={['0-0-0-2']}
+                                                                onSelect={handleInnerTreeSelect}
+                                                                treeData={catalogTree}
+                                                            />
+                                                        </Form.Item>
+                                                        {/* <Form.Item {...tailFormItemLayout}> */}
+                                                        <Space size="middle">
+                                                            <div className="mt-4" style={{ float: "right" }}>
+                                                                <span className="dtr-data">
+                                                                    <button onClick={handleAddChild} className="btn btn-primary mr-2" data-toggle="modal" data-target="#bs-role-modal-xl">添加当前目录子目录</button>
+                                                                    {/* <Button htmlType="button" onClick={handleAddRoot}>
+                                                                            Reset
+                                                                        </Button> */}
+                                                                    {/* <Button type="link" htmlType="button" onClick={handleAddRoot(catalogNodeSelect)}>
+                                                                            Fill form
+                                                                        </Button> */}
+                                                                </span>
+                                                            </div>
+                                                        </Space>
+                                                        {/* </Form.Item> */}
+
+                                                    </Media>
+                                                </Media>
+
+
+                                            </React.Fragment>
+                                        </Col>
+
+                                    </Row>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+
+                </Col>
+                <Col xl={9}>
+                    <Row>
+                        <Col md={12}>
+                            <Card>
+                                <CardBody>
+                                    <Nav tabs>
+                                        <NavItem>
+                                            <NavLink
+                                                href="#"
+                                                className={classNames({ active: activeTab === 'detail' })}
+                                                onClick={() => { toggleTab('detail'); }}>基本信息</NavLink>
+                                        </NavItem>
+                                        <NavItem>
+                                            <NavLink
+                                                href="#"
+                                                className={classNames({ active: activeTab === 'advance' })}
+                                                onClick={() => { toggleTab('advance'); }}>扩展信息</NavLink>
+                                        </NavItem>
+                                        <NavItem>
+                                            <NavLink
+                                                href="#"
+                                                className={classNames({ active: activeTab === 'preview' })}
+                                                onClick={() => { toggleTab('preview'); }}>产品类目预览</NavLink>
+                                        </NavItem>
+                                    </Nav>
+                                    <TabContent activeTab={activeTab}>
+                                        <TabPane tabId="detail">
+                                            <Row>
+                                                <Col sm="12">
+                                                    <Card >
+                                                        <CardBody style={{ backgroundColor: "#f7f7f7" }}>
+                                                            <Row>
+                                                                <Col>
+                                                                    <Media className="mt-2 mb-2 p-3" style={{ backgroundColor: "#fff", fontSize: "15px" }}>
+                                                                        <Media body >
+                                                                            <h6 className="mt-0 mb-2 header-title">产品类目信息的录入</h6>
+                                                                            <hr></hr>
+                                                                            {newCatalogInfo && (
+                                                                                <Alert showIcon={true} showLine={true} className="mt-2 mb-2"
+                                                                                    message={notification} type="info" />
+                                                                            )}
+
+                                                                            <Form.Item name="catalog_active" label="启动产品类目" valuePropName="checked" className="mt-0 mb-0 p-2">
+                                                                                <Switch value={catalog_active} />
+                                                                            </Form.Item>
+                                                                            <Form.Item name="catalog_enable" label="启动类目菜单" valuePropName="checked" className="mt-0 mb-0 p-2">
+                                                                                <Switch value={catalog_enable} />
+                                                                            </Form.Item>
+                                                                            <Form.Item
+                                                                                name="catalog_name"
+                                                                                label="产品类目标题"
+                                                                                value={catalog_name}
+                                                                                tooltip="当前的产品类目标题是什么?"
+                                                                                rules={[
+                                                                                    {
+                                                                                        required: true,
+                                                                                        message: '请输入产品类目标题',
+                                                                                        whitespace: true,
+                                                                                    },
+                                                                                ]}
+                                                                            ><Input />
+                                                                            </Form.Item>
+                                                                            <Form.Item
+                                                                                name="catalog_intro"
+                                                                                label="系列简单介绍"
+                                                                                value={catalog_intro}
+                                                                                rules={[
+                                                                                    {
+                                                                                        required: true,
+                                                                                        message: '请输入系列简单介绍',
+                                                                                    },
+                                                                                ]}
+                                                                            >
+                                                                                <Input.TextArea showCount maxLength={100} />
+                                                                            </Form.Item>
+                                                                            <Form.Item
+                                                                                style={{ minHeight: '230px' }}
+                                                                                name="catalog_description"
+                                                                                label="系列详细描述"
+                                                                                rules={[
+                                                                                    {
+                                                                                        required: true,
+                                                                                        message: '请输入系列详细描述',
+                                                                                    },
+                                                                                ]}
+                                                                            >
+                                                                                <ReactQuill style={{ height: 200 }}
+                                                                                    theme="snow"
+                                                                                    value={catalog_description || ""}
+                                                                                    modules={modules}
+                                                                                    formats={formats}
+                                                                                    onChange={onEditorContentChange}
+                                                                                    placeholder={catalog_description}
+                                                                                />
+                                                                            </Form.Item>
+                                                                            <Form.Item
+                                                                                name="catalog_media_lib"
+                                                                                label="从图片库选择图片"
+                                                                            >
+                                                                                <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                                                                    只允许 *.png, *.jpg and *.jpeg 图片格式</p>
+                                                                                <MediaLib
+                                                                                    fileLibraryList={fileLibraryList}
+                                                                                    fileSelectedList={fileSelectedList}
+                                                                                    onFileSelect={onFileSelect}
+                                                                                ></MediaLib>
+                                                                            </Form.Item>
+                                                                            <Form.Item
+                                                                                name="catalog_template"
+                                                                                label="电商模板"
+                                                                                rules={[
+                                                                                    {
+                                                                                        required: true,
+                                                                                        message: '请选择电商模板',
+                                                                                    },
+                                                                                ]}
+                                                                            >
+                                                                                <Select name="catalog_template"
+                                                                                    className="mb-3 react-select"
+                                                                                    options={[
+                                                                                        { value: 'wigs', label: 'wigs' },
+                                                                                        { value: 'sports', label: 'sports' },
+                                                                                        { value: 'furniture', label: 'furniture' },
+                                                                                    ]}></Select>
+                                                                            </Form.Item>
+                                                                            <Form.Item {...tailFormItemLayout}>
+                                                                                <Button type="primary" htmlType="submit">
+                                                                                    提交更新信息
+                                                                                </Button>
+                                                                                <Button type="primary" onClick={handleDeleteCurrent} htmlType="button">
+                                                                                    删除当前类目
+                                                                                </Button>
+                                                                            </Form.Item>
+                                                                        </Media>
+                                                                    </Media>
+                                                                </Col>
+
+                                                            </Row>
+                                                        </CardBody>
+
+                                                        <CardBody style={{ backgroundColor: "#f7f7f7" }}>
+                                                            <Row>
+                                                                <Col>
+                                                                    <React.Fragment>
+
+
+                                                                    </React.Fragment>
+                                                                </Col>
+
+                                                            </Row>
+                                                        </CardBody>
+
+                                                    </Card>
+
+                                                </Col>
+                                            </Row>
+                                        </TabPane>
+                                        <TabPane tabId="advance">
+                                            <Row>
+                                                <Col sm="12">
+                                                    <Card >
+                                                        <CardBody style={{ backgroundColor: "#f7f7f7" }}>
+                                                            <Row>
+                                                                <Col>
+                                                                    <Media className="mt-2 mb-2 p-3" style={{ backgroundColor: "#fff" }}>
+                                                                        <Media body >
+                                                                            <CatalogProducts></CatalogProducts>
+                                                                        </Media>
+
+                                                                    </Media>
+                                                                </Col>
+
+                                                            </Row>
+                                                        </CardBody>
+
+                                                        <CardBody style={{ backgroundColor: "#f7f7f7" }}>
+                                                            <Row>
+                                                                <Col>
+                                                                    <React.Fragment>
+
+                                                                    </React.Fragment>
+                                                                </Col>
+
+                                                            </Row>
+                                                        </CardBody>
+
+                                                    </Card>
+                                                </Col>
+                                            </Row>
+                                        </TabPane>
+                                        <TabPane tabId="preview">
+                                            <Row>
+                                                <Col sm="12">
+                                                    preview
+                                                    {/* <Sessions Sections={currentCourse} SectionBottom={this.state.sectionBottom}></Sessions> */}
+                                                </Col>
+                                            </Row>
+                                        </TabPane>
+                                    </TabContent>
+
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+
+                </Col>
+            </Row>
+
+        </Form>
+
+    );
+};
+
+export default CatalogEffect;

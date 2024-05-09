@@ -1,0 +1,54 @@
+import { fetchJSON } from "./api";
+
+const token = 'your_bearer_token';
+const globalUrl = '';
+
+const getApi = (url, payload) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    const response = fetchJSON(url, options);
+    return response;
+}
+
+const postApi = (url, payload) => {
+    const options = {
+        body: JSON.stringify(payload),
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    const response = fetchJSON(url, options);
+    return response;
+}
+
+const deleteApi = (url, payload) => {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    const response = fetchJSON(url, options);
+    return response;
+}
+
+const updateApi = (url, payload) => {
+    const options = {
+        body: JSON.stringify(payload),
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    const response = fetchJSON(url, options);
+    return response;
+}
+
+export { updateApi, deleteApi, postApi, getApi }

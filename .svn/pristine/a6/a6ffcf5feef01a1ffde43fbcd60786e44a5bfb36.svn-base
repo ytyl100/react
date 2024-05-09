@@ -1,0 +1,138 @@
+import React, { useEffect, useState } from 'react';
+import {
+  Button,
+  Space
+} from 'antd';
+
+
+import {
+  FileLibraryListItem,
+  ReactMediaLibraryRevived,
+  FileMeta,
+} from 'react-media-library-revived';
+
+const MediaLib = () => {
+  const [display, setDisplay] = useState(false);
+  const [fileLibraryList, setFileLibraryList] = useState([]);
+
+  useEffect(() => {
+    // TODO Get file list from database
+    setFileLibraryList([
+      {
+        _id: 1,
+        title: 'Cat 300x300',
+        size: 294880,
+        fileName: 'cat300.jpg',
+        type: 'image/jpeg',
+        createdAt: new Date('2022-10-17T03:12:29.866Z'),
+        thumbnailUrl: 'https://placekitten.com/300/300',
+      },
+      {
+        _id: 2,
+        title: 'Cat 500x500',
+        size: 864483,
+        fileName: 'cat500.jpg',
+        type: 'image/jpeg',
+        createdAt: new Date('2022-10-17T03:12:45.018Z'),
+        thumbnailUrl: 'https://placekitten.com/500/500',
+      },
+      {
+        _id: 3,
+        title: 'Cat 600x600',
+        size: 586458,
+        fileName: 'cat600.jpg',
+        type: 'image/jpeg',
+        createdAt: new Date('2022-10-17T03:19:33.498Z'),
+        thumbnailUrl: 'https://placekitten.com/600/600',
+      },
+      {
+        _id: 4,
+        title: 'Cat 800x800',
+        size: 894665,
+        fileName: 'photo-107.jpg',
+        type: 'image/jpeg',
+        createdAt: new Date('2022-10-17T03:28:39.723Z'),
+        thumbnailUrl: 'https://placekitten.com/800/800',
+      },
+    ]);
+  }, []);
+
+  async function uploadCallback(
+    fileBase64,
+    fileMeta
+  ) {
+    // TODO Upload file to backend APIs
+    return true;
+
+    // const result = await fileUpload(fileBase64, fileMeta);
+
+    // if (result.success) {
+    //   // New file uploaded
+    //   // TODO Reacquire new file list from database
+    //   const newFileList = await getNewFileList();
+    //   setFileLibraryList(newFileList);
+
+    //   // Return true to display upload success in modal
+    //   return true;
+    // } else {
+    //   // Return false to display upload failed in modal
+    //   return false;
+    // }
+  }
+
+  function selectCallback(item) {
+    // Hide modal
+    setDisplay(false);
+
+    // TODO Pass selected file back to client component callback function
+    //clientSelectCallback(item);
+  }
+
+  async function deleteCallback(item) {
+    // TODO Delete file from backend service
+    // const result = await fileDelete(item);
+
+    // if (result.success) {
+    //   // Deleted file
+    //   // TODO Reacquire file list from database
+    //   const newFileList = await getNewFileList();
+    //   setFileLibraryList(newFileList);
+    // }
+  }
+
+  function tabChangeHandler(key) {
+    // ...
+  }
+
+  return (
+    <React.Fragment>
+      <Space size="right">
+        <div className="mt-4" style={{ float: "right" }}>
+          <span className="dtr-data">
+            <button onClick={() => { setDisplay(true); }}
+              className="btn btn-primary mr-2"
+              data-toggle="modal"
+              data-target="#bs-role-modal-xl">打开图片库选择图片</button>
+
+          </span>
+        </div>
+      </Space>
+
+      <ReactMediaLibraryRevived
+        show={display}
+        onHide={() => {
+          setDisplay(false);
+        }}
+        dialogClassName={'modal-dialog-scrollable'}
+        modalTitle={'EX-HUB图片库'}
+        fileUploadCallback={uploadCallback}
+        fileLibraryList={fileLibraryList}
+        fileSelectCallback={selectCallback}
+        fileDeleteCallback={deleteCallback}
+        tabChangeCallback={tabChangeHandler}
+      />
+    </React.Fragment>
+  );
+};
+
+export default MediaLib;

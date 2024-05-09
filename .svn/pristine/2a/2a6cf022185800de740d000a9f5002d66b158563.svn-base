@@ -1,0 +1,4 @@
+global.api = {
+    url: 'https://api2.xhfair.com/v1/',
+    name: 'api address',
+}

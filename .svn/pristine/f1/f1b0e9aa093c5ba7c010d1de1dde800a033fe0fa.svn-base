@@ -1,0 +1,105 @@
+/* eslint-disable react/style-prop-object */
+import React, { Component } from 'react';
+import { Row, Col, Card, CardBody, } from 'reactstrap';
+import PageTitle from '../../../components/PageTitle';
+import LeftSettings from './LeftSettings';
+import RightItems from './RightItems';
+
+class Board extends Component {
+
+    constructor(props) {
+        super(props);
+
+        const { match } = this.props;
+        const { id } = match.params;
+
+        const updateStore = id === "1002" ? {
+            store_residence: [],
+            prefix: '86',
+            store_name: '店铺名称',
+            store_intro: '店铺介绍-测试22',
+            store_address: '店铺地址-测试33',
+            store_phone: '店铺电话-测试44',
+            store_website: 'www.xhfair.com',
+            store_vendor: 'winmax'
+        } : null;
+
+        this.state = {
+            fileList: [
+                {
+                    uid: '-1',
+                    name: 'image.png',
+                    status: 'done',
+                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+                },
+            ], // Initialize an empty file list
+            initStore: updateStore,
+        };
+    }
+
+    componentDidMount() {
+
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.initStore !== prevState.initStore) {
+            console.log('componentDidUpdate:', this.state.initStore); // logs the updated state
+        }
+    }
+
+    handleFileListChange = (newFileList) => {
+        this.setState({ fileList: newFileList });
+        console.log('file list change:', newFileList);
+    };
+
+    onFormSubmission = (values) => {
+        console.log('Received values of form: ', values);
+    };
+
+    onFormClose = () => {
+        this.props.history.push(`/ecommerce/storeitems`);
+    }
+
+    render() {
+
+        return <React.Fragment>
+            <Row className="page-title">
+                <Col md={12}>
+                    <PageTitle
+                        breadCrumbItems={[
+                            { label: 'Apps', path: '/apps/tasks/list' },
+                            { label: 'Tasks', path: '/apps/tasks/list', active: true },
+                        ]}
+                        title={'品牌管理'}
+                    />
+                </Col>
+            </Row>
+
+            {/* filter panel */}
+            <Row>
+                <Col xl={12}>
+
+                    <Card>
+                        <CardBody>
+                            <p className="sub-header">
+                                店铺管理包括供货商店铺信息资料，图片形象以及地点信息；
+                            </p>
+                            <Row>
+                                <Col xl={3}>
+                                    <LeftSettings handleFileListChange={this.handleFileListChange} fileList={this.state.fileList}></LeftSettings>
+                                </Col>
+                                <Col xl={9}>
+                                    <RightItems onFormSubmission={this.onFormSubmission} onFormClose={this.onFormClose} initStore={this.state.initStore}></RightItems>
+
+                                </Col>
+                            </Row>
+                        </CardBody>
+                    </Card>
+
+                </Col>
+            </Row>
+        </React.Fragment>
+    }
+}
+
+export default Board;

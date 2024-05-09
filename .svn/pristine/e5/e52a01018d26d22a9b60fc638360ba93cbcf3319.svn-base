@@ -1,0 +1,388 @@
+{
+    "id": 1,
+    "product": {
+        "product_type": "single",
+        "product_activate": true,
+        "product_name": "we arethe one",
+        "product_sku": "we009",
+        "product_categories": [
+            {
+                "label": "Accessories",
+                "value": "0-0-0-0"
+            },
+            {
+                "label": "Bags",
+                "value": "0-0-0-1"
+            },
+            {
+                "label": "Kid's Fashion",
+                "value": "0-0-0-2"
+            }
+        ],
+        "product_attributes": [],
+        "product_in_stock": true,
+        "product_currency": "USD",
+        "product_unit_price": 99,
+        "product_unit_cost": 70,
+        "product_unit_stock": 80,
+        "product_intro": "t-shirt",
+        "product_description": "<p>t-shirt</p >",
+        "product_promote_price": 90,
+        "product_promote_valid_range": ["2024-01-21T08:20:42.997Z", "2024-01-21T08:20:42.997Z"],
+        "product_weight_option": "lbs",
+        "product_weight": 0.4,
+        "product_tax_option": "p",
+        "product_tax": 9,
+        "product_url": "we-arethe-one",
+        "product_status": 0,
+        "product_tag": ""
+    },
+    "images": [
+        {
+            "_id": 3,
+            "title": "avatar-10",
+            "type": "image/jpeg",
+            "size": 7494,
+            "filename": "avatar-10",
+            "createdAt": "1970-01-20T16:45:41.966Z",
+            "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/category/avatar-10.jpg"
+        },
+        {
+            "_id": 4,
+            "title": "avatar-2",
+            "type": "image/jpeg",
+            "size": 5688,
+            "filename": "avatar-2",
+            "createdAt": "1970-01-20T16:45:40.283Z",
+            "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/category/avatar-2.jpg"
+        }
+    ],
+    "variants": [
+        {
+            "id": 1,
+            "key": 1,
+            "attribute": [
+                {
+                    "size": "S",
+                    "color": "white"
+                }
+            ],
+            "sku": "we009-S-white",
+            "intro": "size:S|color:white",
+            "price": "99.00",
+            "promote_price": "90.00",
+            "stock": "80.00",
+            "images": [
+                {
+                    "_id": 5,
+                    "title": "avatar-7",
+                    "type": "image/jpeg",
+                    "size": 8233,
+                    "filename": "avatar-7",
+                    "createdAt": "1970-01-20T16:45:40.777Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/category/avatar-7.jpg"
+                },
+                {
+                    "_id": 6,
+                    "title": "not-found",
+                    "type": "image/png",
+                    "size": 37484,
+                    "filename": "not-found",
+                    "createdAt": "1970-01-20T16:45:17.501Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/category/not-found.png"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "key": 1,
+            "attribute": [
+                {
+                    "size": "L",
+                    "color": "white"
+                }
+            ],
+            "sku": "we009-L-white",
+            "intro": "size:L|color:white",
+            "price": "99.00",
+            "promote_price": "90.00",
+            "stock": "80.00",
+            "images": [
+                {
+                    "_id": 5,
+                    "title": "avatar-7",
+                    "type": "image/jpeg",
+                    "size": 8233,
+                    "filename": "avatar-7",
+                    "createdAt": "1970-01-20T16:45:40.777Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/category/avatar-7.jpg"
+                },
+                {
+                    "_id": 6,
+                    "title": "not-found",
+                    "type": "image/png",
+                    "size": 37484,
+                    "filename": "not-found",
+                    "createdAt": "1970-01-20T16:45:17.501Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/category/not-found.png"
+                }
+            ]
+        },
+        {
+            "key": 1,
+            "attribute": [
+                {
+                    "size": "L",
+                    "color": "white"
+                }
+            ],
+            "sku": "we009-L-white",
+            "intro": "size:L|color:white",
+            "price": "99.00",
+            "promote_price": "90.00",
+            "stock": "80.00",
+            "images": [
+                {
+                    "_id": 5,
+                    "title": "avatar-7",
+                    "type": "image/jpeg",
+                    "size": 8233,
+                    "filename": "avatar-7",
+                    "createdAt": "1970-01-20T16:45:40.777Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/category/avatar-7.jpg"
+                },
+                {
+                    "_id": 6,
+                    "title": "not-found",
+                    "type": "image/png",
+                    "size": 37484,
+                    "filename": "not-found",
+                    "createdAt": "1970-01-20T16:45:17.501Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/category/not-found.png"
+                }
+            ]
+        },
+        {
+            "key": 0,
+            "attributes": {
+                "size": "S",
+                "color": "white"
+            },
+            "sku": "we0090-S-white",
+            "intro": "size:S|color:white",
+            "price": 44,
+            "promote_price": 66,
+            "stock": "3.00",
+            "images": [
+                {
+                    "_id": 4,
+                    "title": "avatar-6",
+                    "type": "image/jpeg",
+                    "size": 5741,
+                    "filename": "avatar-6",
+                    "createdAt": "1970-01-20T18:10:41.296Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-6.jpg"
+                },
+                {
+                    "_id": 3,
+                    "title": "avatar-4",
+                    "type": "image/jpeg",
+                    "size": 6660,
+                    "filename": "avatar-4",
+                    "createdAt": "1970-01-20T18:10:41.296Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-4.jpg"
+                },
+                {
+                    "_id": 1,
+                    "title": "avatar-1",
+                    "type": "image/jpeg",
+                    "size": 60134,
+                    "filename": "avatar-1",
+                    "createdAt": "1970-01-20T18:10:41.295Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-1.jpg"
+                }
+            ]
+        },
+    ]
+}
+
+{
+    "id": 0,
+    "product": {
+        "product_type": "single",
+        "product_activate": true,
+        "product_categories": [
+            {
+                "label": "Accessories",
+                "value": "0-0-0-0"
+            },
+            {
+                "label": "Bags",
+                "value": "0-0-0-1"
+            }
+        ],
+        "product_name": "we arethe one product",
+        "product_sku": "we0090888",
+        "product_URL": "we-arethe-one-product",
+        "product_currency": "USD",
+        "product_unit_price": 99,
+        "product_promote_price": 88,
+        "product_tax_option": "p",
+        "product_tax": 3,
+        "product_unit_stock": 3,
+        "product_in_stock": true,
+        "product_weight_option": "kgs",
+        "product_weight": 3,
+        "product_intro": "intro",
+        "product_description": "<p>123</p>"
+    },
+    "images": [
+        {
+            "_id": 3,
+            "title": "avatar-4",
+            "type": "image/jpeg",
+            "size": 6660,
+            "filename": "avatar-4",
+            "createdAt": "1970-01-20T18:10:41.296Z",
+            "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-4.jpg"
+        },
+        {
+            "_id": 1,
+            "title": "avatar-1",
+            "type": "image/jpeg",
+            "size": 60134,
+            "filename": "avatar-1",
+            "createdAt": "1970-01-20T18:10:41.295Z",
+            "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-1.jpg"
+        }
+    ],
+    "variants": [
+        {
+            "key": 0,
+            "size": "S",
+            "color": "white",
+            "attributes": {
+                "size": "S",
+                "color": "white"
+            },
+            "sku": "we0090-S-white",
+            "intro": "size:S|color:white",
+            "price": 44,
+            "promote_price": 66,
+            "stock": "3.00",
+            "images": [
+                {
+                    "_id": 4,
+                    "title": "avatar-6",
+                    "type": "image/jpeg",
+                    "size": 5741,
+                    "filename": "avatar-6",
+                    "createdAt": "1970-01-20T18:10:41.296Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-6.jpg"
+                },
+                {
+                    "_id": 3,
+                    "title": "avatar-4",
+                    "type": "image/jpeg",
+                    "size": 6660,
+                    "filename": "avatar-4",
+                    "createdAt": "1970-01-20T18:10:41.296Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-4.jpg"
+                },
+                {
+                    "_id": 1,
+                    "title": "avatar-1",
+                    "type": "image/jpeg",
+                    "size": 60134,
+                    "filename": "avatar-1",
+                    "createdAt": "1970-01-20T18:10:41.295Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-1.jpg"
+                }
+            ]
+        },
+        {
+            "key": 1,
+            "size": "S",
+            "color": "Red",
+            "attributes": {
+                "size": "S",
+                "color": "Red"
+            },
+            "sku": "we0090-S-Red",
+            "intro": "size:S|color:Red",
+            "price": 55,
+            "promote_price": 77,
+            "stock": "3.00",
+            "images": [
+                {
+                    "_id": 4,
+                    "title": "avatar-6",
+                    "type": "image/jpeg",
+                    "size": 5741,
+                    "filename": "avatar-6",
+                    "createdAt": "1970-01-20T18:10:41.296Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-6.jpg"
+                },
+                {
+                    "_id": 1,
+                    "title": "avatar-1",
+                    "type": "image/jpeg",
+                    "size": 60134,
+                    "filename": "avatar-1",
+                    "createdAt": "1970-01-20T18:10:41.295Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-1.jpg"
+                }
+            ]
+        },
+        {
+            "key": 4,
+            "size": "L",
+            "color": "white",
+            "attributes": {
+                "size": "L",
+                "color": "white"
+            },
+            "sku": "we0090-L-white",
+            "intro": "size:L|color:white",
+            "price": 87,
+            "promote_price": "88.00",
+            "stock": "3.00",
+            "images": [
+                {
+                    "_id": 3,
+                    "title": "avatar-4",
+                    "type": "image/jpeg",
+                    "size": 6660,
+                    "filename": "avatar-4",
+                    "createdAt": "1970-01-20T18:10:41.296Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-4.jpg"
+                }
+            ]
+        },
+        {
+            "key": 5,
+            "size": "L",
+            "color": "Red",
+            "attributes": {
+                "size": "L",
+                "color": "Red"
+            },
+            "sku": "we0090-L-Red",
+            "intro": "size:L|color:Red",
+            "price": 88,
+            "promote_price": 99,
+            "stock": "3.00",
+            "images": [
+                {
+                    "_id": 2,
+                    "title": "avatar-2",
+                    "type": "image/jpeg",
+                    "size": 6604,
+                    "filename": "avatar-2",
+                    "createdAt": "1970-01-20T18:38:00.666Z",
+                    "thumbnailUrl": "https://api.xhfair.com/storage/vendor/5/product/avatar-2.jpg"
+                }
+            ]
+        }
+    ]
+}

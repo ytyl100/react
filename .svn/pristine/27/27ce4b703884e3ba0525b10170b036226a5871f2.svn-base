@@ -1,0 +1,180 @@
+
+const treeData = [
+    {
+        title: 'ex-hub 2024',
+        value: 'ex-hub-2024',
+        desc: '',
+        image_url: '',
+        key: '0-0',
+        children: [
+            {
+                title: 'Clothing & Apparel',
+                value: 'clothing-apparel',
+                desc: '',
+                image_url: '',
+                key: '0-0-0',
+                children: [
+                    {
+                        title: 'Accessories',
+                        value: 'accessories',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-0-0',
+                    },
+                    {
+                        title: 'Bags',
+                        value: 'bags',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-0-1',
+                    },
+                    {
+                        title: "Kid's Fashion",
+                        value: 'kids-fashion',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-0-2',
+                    },
+                    {
+                        title: "Mens",
+                        value: 'mens',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-0-3',
+                    },
+                ],
+            },
+            {
+                title: 'Garden & Kitchen',
+                value: 'garden-kitchen',
+                desc: '',
+                image_url: '',
+                key: '0-0-1',
+                children: [
+                    {
+                        title: 'Cookware',
+                        value: 'cookware',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-1-0',
+                    },
+                    {
+                        title: 'Decoration',
+                        value: 'decoration',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-1-1',
+                    },
+                    {
+                        title: 'Furniture',
+                        value: 'furniture',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-1-2',
+                    },
+                    {
+                        title: 'Garden Tools',
+                        value: 'garden-tools',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-1-3',
+                    },
+                ],
+            },
+            {
+                title: 'Consumer Electrics',
+                value: 'consumer-electrics',
+                desc: '',
+                image_url: '',
+                key: '0-0-2',
+                children: [
+                    {
+                        title: 'Air Conditioners',
+                        value: 'air-conditioners',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-2-0',
+                    },
+                    {
+                        title: 'Audios & Theaters',
+                        value: 'audios-theaters',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-2-1',
+                    },
+                    {
+                        title: 'Car Electronics',
+                        value: 'car-electronics',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-2-2',
+                    },
+                    {
+                        title: 'Office Electronics',
+                        value: 'office-electronics',
+                        desc: '',
+                        image_url: '',
+                        key: '0-0-2-3',
+                    },
+                ],
+            },
+        ],
+    },
+];
+
+const DeleteCurrentNode = (data, key) => {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].key === key) {
+            console.log('current value:', data[i]);
+            delete data[i];
+        }
+        if (data[i] && data[i].children) {
+            DeleteCurrentNode(data[i].children, key);
+        }
+    }
+    return data;
+};
+
+console.log('current loopTree:', DeleteCurrentNode(treeData, '0-0-0-2'));
+
+const newNode = {
+    title: 'newNode',
+    value: 'newNode',
+    desc: '',
+    image_url: '',
+    key: '0',
+}
+
+const newhildNode = {
+    children: [
+        {
+            title: 'newNode',
+            value: 'newNode',
+            desc: '',
+            image_url: '',
+            key: '0',
+        }]
+};
+
+const AddNewNode = (data, key) => {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].key === key) {
+            console.log('current value:', data[i]);
+            if (data[i].children) {
+                data[i].children.push(newNode);
+            }
+            else {
+                data[i] = { ...data[i], ...newhildNode };
+            }
+        }
+        if (data[i].children) {
+            AddNewNode(data[i].children, key);
+        }
+    }
+    return data;
+};
+
+console.log('current loopTree:', AddNewNode(treeData, '0-0-2'));
+
+
+

@@ -1,0 +1,592 @@
+/* eslint-disable react/style-prop-object */
+import React, { Component } from 'react';
+import { Row, Col, Card, CardBody, } from 'reactstrap';
+
+import PageTitle from '../../../components/PageTitle';
+import CatalogEffect from '../utilities/CatalogUseEffect';
+import { Info } from 'react-feather';
+
+class Board extends Component {
+    // eslint-disable-next-line no-useless-constructor
+    constructor(props) {
+        super(props);
+        const { match } = this.props;
+        const { id } = match.params;
+
+        this.state = {
+            activeTab: 'detail',
+            selectedKeys: [],
+            fileList: [
+                {
+                    uid: '-1',
+                    name: 'image.png',
+                    status: 'done',
+                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+                },
+            ], // Initialize an empty file list 
+            catalog_active: null,
+            catalog_enable: null,
+            catalog_name: '',
+            catalog_intro: '',
+            catalog_description: '123',
+            display: false,
+            fileLibraryList: [
+                {
+                    _id: 1,
+                    title: "Me and my dog",
+                    size: 294880,
+                    fileName: "img_3549.jpg",
+                    type: "image/jpeg",
+                    createdAt: new Date("2019-10-17T03:12:29.866Z"),
+                    thumbnailUrl:
+                        "https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg"
+                },
+                {
+                    _id: 2,
+                    title: "2019 Summer Vacation",
+                    size: 864483,
+                    fileName: "201702.jpg",
+                    type: "image/jpeg",
+                    createdAt: new Date("2019-10-17T03:12:45.018Z"),
+                    thumbnailUrl:
+                        "https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg"
+                },
+                {
+                    _id: 3,
+                    title: "Our new baby",
+                    size: 586458,
+                    fileName: "271092.jpg",
+                    type: "image/jpeg",
+                    createdAt: new Date("2019-10-17T03:19:33.498Z"),
+                    thumbnailUrl:
+                        "https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg"
+                },
+                {
+                    _id: 4,
+                    title: "My new car",
+                    size: 894665,
+                    fileName: "photo-107.jpg",
+                    type: "image/jpeg",
+                    createdAt: new Date("2019-10-17T03:28:39.723Z"),
+                    thumbnailUrl:
+                        "https://image.shutterstock.com/image-photo/beautiful-water-drop-on-dandelion-260nw-789676552.jpg"
+                }
+            ],
+            treeData: [
+                {
+                    title: 'ex-hub 2024',
+                    value: 'ex-hub-2024',
+                    key: '0-0',
+                    children: [
+                        {
+                            title: 'Clothing & Apparel',
+                            value: 'clothing-apparel',
+                            key: '0-0-0',
+                            children: [
+                                {
+                                    title: 'Accessories',
+                                    value: 'accessories',
+                                    key: '0-0-0-0',
+                                },
+                                {
+                                    title: 'Bags',
+                                    value: 'bags',
+                                    key: '0-0-0-1',
+                                },
+                                {
+                                    title: "Kid's Fashion",
+                                    value: 'kids-fashion',
+                                    key: '0-0-0-2',
+                                },
+                                {
+                                    title: "Mens",
+                                    value: 'mens',
+                                    key: '0-0-0-3',
+                                },
+                            ],
+                        },
+                        {
+                            title: 'Garden & Kitchen',
+                            value: 'garden-kitchen',
+                            key: '0-0-1',
+                            children: [
+                                {
+                                    title: 'Cookware',
+                                    value: 'cookware',
+                                    key: '0-0-1-0',
+                                },
+                                {
+                                    title: 'Decoration',
+                                    value: 'decoration',
+                                    key: '0-0-1-1',
+                                },
+                                {
+                                    title: 'Furniture',
+                                    value: 'furniture',
+                                    key: '0-0-1-2',
+                                },
+                                {
+                                    title: 'Garden Tools',
+                                    value: 'garden-tools',
+                                    key: '0-0-1-3',
+                                },
+                            ],
+                        },
+                        {
+                            title: 'Consumer Electrics',
+                            value: 'consumer-electrics',
+                            key: '0-0-2',
+                            children: [
+                                {
+                                    title: 'Air Conditioners',
+                                    value: 'air-conditioners',
+                                    key: '0-0-2-0',
+                                },
+                                {
+                                    title: 'Audios & Theaters',
+                                    value: 'audios-theaters',
+                                    key: '0-0-2-1',
+                                },
+                                {
+                                    title: 'Car Electronics',
+                                    value: 'car-electronics',
+                                    key: '0-0-2-2',
+                                },
+                                {
+                                    title: 'Office Electronics',
+                                    value: 'office-electronics',
+                                    key: '0-0-2-3',
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ]
+        }
+        this.toggleTab = this.toggleTab.bind(this);
+    }
+
+    componentDidMount = () => {
+        // this.setState({
+        //     treeData: [
+        //         {
+        //             title: 'ex-hub 2024',
+        //             value: 'ex-hub-2024',
+        //             key: '0-0',
+        //             children: [
+        //                 {
+        //                     title: 'Clothing & Apparel',
+        //                     value: 'clothing-apparel',
+        //                     key: '0-0-0',
+        //                     children: [
+        //                         {
+        //                             title: 'Accessories',
+        //                             value: 'accessories',
+        //                             key: '0-0-0-0',
+        //                         },
+        //                         {
+        //                             title: 'Bags',
+        //                             value: 'bags',
+        //                             key: '0-0-0-1',
+        //                         },
+        //                         {
+        //                             title: "Kid's Fashion",
+        //                             value: 'kids-fashion',
+        //                             key: '0-0-0-2',
+        //                         },
+        //                         {
+        //                             title: "Mens",
+        //                             value: 'mens',
+        //                             key: '0-0-0-3',
+        //                         },
+        //                     ],
+        //                 },
+        //                 {
+        //                     title: 'Garden & Kitchen',
+        //                     value: 'garden-kitchen',
+        //                     key: '0-0-1',
+        //                     children: [
+        //                         {
+        //                             title: 'Cookware',
+        //                             value: 'cookware',
+        //                             key: '0-0-1-0',
+        //                         },
+        //                         {
+        //                             title: 'Decoration',
+        //                             value: 'decoration',
+        //                             key: '0-0-1-1',
+        //                         },
+        //                         {
+        //                             title: 'Furniture',
+        //                             value: 'furniture',
+        //                             key: '0-0-1-2',
+        //                         },
+        //                         {
+        //                             title: 'Garden Tools',
+        //                             value: 'garden-tools',
+        //                             key: '0-0-1-3',
+        //                         },
+        //                     ],
+        //                 },
+        //                 {
+        //                     title: 'Consumer Electrics',
+        //                     value: 'consumer-electrics',
+        //                     key: '0-0-2',
+        //                     children: [
+        //                         {
+        //                             title: 'Air Conditioners',
+        //                             value: 'air-conditioners',
+        //                             key: '0-0-2-0',
+        //                         },
+        //                         {
+        //                             title: 'Audios & Theaters',
+        //                             value: 'audios-theaters',
+        //                             key: '0-0-2-1',
+        //                         },
+        //                         {
+        //                             title: 'Car Electronics',
+        //                             value: 'car-electronics',
+        //                             key: '0-0-2-2',
+        //                         },
+        //                         {
+        //                             title: 'Office Electronics',
+        //                             value: 'office-electronics',
+        //                             key: '0-0-2-3',
+        //                         },
+        //                     ],
+        //                 },
+        //             ],
+        //         },
+        //     ]
+        // })
+    }
+
+    // componentDidUpdate = prevProps => {
+
+    // };
+
+    toggleTab = (tab) => {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab
+            });
+        }
+    }
+
+    handleTreeSelect = (selectedKeys) => {
+        this.setState({ selectedKeys });
+
+        this.setState({
+            // catalogInitVal: null,
+            catalog_active: true,
+            catalog_enable: false,
+            catalog_name: selectedKeys[0],
+            catalog_intro: '店铺-测试666',
+            catalog_description: '店铺-8888',
+        })
+
+        console.log('selectedKeys:', selectedKeys);
+    };
+
+    handleTreeSelectOption = (selectedKeys) => {
+        //this.props.onTreeSelect(selectedKeys);
+        console.log('selectedKeys:', selectedKeys, Info);
+
+    };
+
+    handleTreeCatalogSubmit = (value) => {
+
+    }
+
+    handleFileListChange = (newFileList) => {
+        this.setState({ fileList: newFileList });
+        console.log('file list change:', newFileList);
+    };
+
+    onFormSubmission = (values) => {
+        console.log('Received values of form: ', values);
+    };
+
+    onFormClose = () => {
+        this.props.history.push(`/ecommerce/categoryitems`);
+    }
+
+    onEditorContentChange = editorContent => {
+        this.setState({ newReplyContent: editorContent });
+    }
+
+    buildNewNestedJson = (selectedKeys) => {
+        let newJson = [];
+        let newNode = {
+            title: 'newNode',
+            value: 'newNode',
+            key: '0',
+        }
+        let originalJson = this.state.treeData;
+        for (var key in originalJson) {
+            if (originalJson.hasOwnProperty(key)) {
+                var value = originalJson[key];
+
+                if (typeof value === 'object' && value !== null) {
+                    if (value.key === selectedKeys) {
+                        if (typeof value.children !== 'undefined') {
+                            value.children.push(newNode);
+                        }
+                        else {
+                            value.children = newNode;
+                        }
+                    }
+                    newJson[key] = this.buildNewNestedJson(value); // Recursively build nested JSON
+                }
+                else {
+                    newJson[key] = value;
+                }
+            }
+
+        }
+        this.setState({ treeData: newJson });
+    }
+
+    // const treeData = [
+    //     {
+    //         title: 'ex-hub 2024',
+    //         value: 'ex-hub-2024',
+    //         key: '0-0',
+    //         children: [
+    //             {
+    //                 title: 'Clothing & Apparel',
+    //                 value: 'clothing-apparel',
+    //                 key: '0-0-0',
+    //                 children: [
+    //                     {
+    //                         title: 'Accessories',
+    //                         value: 'accessories',
+    //                         key: '0-0-0-0',
+    //                     },
+    //                     {
+    //                         title: 'Bags',
+    //                         value: 'bags',
+    //                         key: '0-0-0-1',
+    //                     },
+    //                     {
+    //                         title: "Kid's Fashion",
+    //                         value: 'kids-fashion',
+    //                         key: '0-0-0-2',
+    //                     },
+    //                     {
+    //                         title: "Mens",
+    //                         value: 'mens',
+    //                         key: '0-0-0-3',
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'Garden & Kitchen',
+    //                 value: 'garden-kitchen',
+    //                 key: '0-0-1',
+    //                 children: [
+    //                     {
+    //                         title: 'Cookware',
+    //                         value: 'cookware',
+    //                         key: '0-0-1-0',
+    //                     },
+    //                     {
+    //                         title: 'Decoration',
+    //                         value: 'decoration',
+    //                         key: '0-0-1-1',
+    //                     },
+    //                     {
+    //                         title: 'Furniture',
+    //                         value: 'furniture',
+    //                         key: '0-0-1-2',
+    //                     },
+    //                     {
+    //                         title: 'Garden Tools',
+    //                         value: 'garden-tools',
+    //                         key: '0-0-1-3',
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'Consumer Electrics',
+    //                 value: 'consumer-electrics',
+    //                 key: '0-0-2',
+    //                 children: [
+    //                     {
+    //                         title: 'Air Conditioners',
+    //                         value: 'air-conditioners',
+    //                         key: '0-0-2-0',
+    //                     },
+    //                     {
+    //                         title: 'Audios & Theaters',
+    //                         value: 'audios-theaters',
+    //                         key: '0-0-2-1',
+    //                     },
+    //                     {
+    //                         title: 'Car Electronics',
+    //                         value: 'car-electronics',
+    //                         key: '0-0-2-2',
+    //                     },
+    //                     {
+    //                         title: 'Office Electronics',
+    //                         value: 'office-electronics',
+    //                         key: '0-0-2-3',
+    //                     },
+    //                 ],
+    //             },
+    //         ],
+    //     },
+    // ];
+
+
+    render() {
+
+        // const treeData = [
+        //     {
+        //         title: 'ex-hub 2024',
+        //         value: 'ex-hub-2024',
+        //         key: '0-0',
+        //         children: [
+        //             {
+        //                 title: 'Clothing & Apparel',
+        //                 value: 'clothing-apparel',
+        //                 key: '0-0-0',
+        //                 children: [
+        //                     {
+        //                         title: 'Accessories',
+        //                         value: 'accessories',
+        //                         key: '0-0-0-0',
+        //                     },
+        //                     {
+        //                         title: 'Bags',
+        //                         value: 'bags',
+        //                         key: '0-0-0-1',
+        //                     },
+        //                     {
+        //                         title: "Kid's Fashion",
+        //                         value: 'kids-fashion',
+        //                         key: '0-0-0-2',
+        //                     },
+        //                     {
+        //                         title: "Mens",
+        //                         value: 'mens',
+        //                         key: '0-0-0-3',
+        //                     },
+        //                 ],
+        //             },
+        //             {
+        //                 title: 'Garden & Kitchen',
+        //                 value: 'garden-kitchen',
+        //                 key: '0-0-1',
+        //                 children: [
+        //                     {
+        //                         title: 'Cookware',
+        //                         value: 'cookware',
+        //                         key: '0-0-1-0',
+        //                     },
+        //                     {
+        //                         title: 'Decoration',
+        //                         value: 'decoration',
+        //                         key: '0-0-1-1',
+        //                     },
+        //                     {
+        //                         title: 'Furniture',
+        //                         value: 'furniture',
+        //                         key: '0-0-1-2',
+        //                     },
+        //                     {
+        //                         title: 'Garden Tools',
+        //                         value: 'garden-tools',
+        //                         key: '0-0-1-3',
+        //                     },
+        //                 ],
+        //             },
+        //             {
+        //                 title: 'Consumer Electrics',
+        //                 value: 'consumer-electrics',
+        //                 key: '0-0-2',
+        //                 children: [
+        //                     {
+        //                         title: 'Air Conditioners',
+        //                         value: 'air-conditioners',
+        //                         key: '0-0-2-0',
+        //                     },
+        //                     {
+        //                         title: 'Audios & Theaters',
+        //                         value: 'audios-theaters',
+        //                         key: '0-0-2-1',
+        //                     },
+        //                     {
+        //                         title: 'Car Electronics',
+        //                         value: 'car-electronics',
+        //                         key: '0-0-2-2',
+        //                     },
+        //                     {
+        //                         title: 'Office Electronics',
+        //                         value: 'office-electronics',
+        //                         key: '0-0-2-3',
+        //                     },
+        //                 ],
+        //             },
+        //         ],
+        //     },
+        // ];
+
+        const { treeData, catalogInitVal, catalog_active, catalog_enable, catalog_name, catalog_intro, catalog_description,
+            fileList, toggleTab, activeTab } = this.state;
+
+        const initialValues = ['0-0-0']; // Set the initial selected value here
+
+
+        return <React.Fragment>
+            <Row className="page-title">
+                <Col md={12}>
+                    <PageTitle
+                        breadCrumbItems={[
+                            { label: 'Apps', path: '/apps/tasks/list' },
+                            { label: 'Tasks', path: '/apps/tasks/list', active: true },
+                        ]}
+                        title={'类目管理'}
+                    />
+                </Col>
+            </Row>
+
+            {/* filter panel */}
+            <Row>
+                <Col xl={12}>
+
+                    <Card>
+                        <CardBody>
+                            <p className="sub-header">
+                                电商类目管理可以建立一个或者多个独立的菜单组，在供货商其下的商铺可以选择不同的菜单组展示在电商前端.
+                            </p>
+
+                            <CatalogEffect
+                                treeData={treeData}
+                                toggleTab={this.toggleTab}
+                                activeTab={activeTab}
+                                onFinish={this.onFormSubmission}
+                                handleTreeSelect={this.handleTreeSelect}
+                                initialValues={initialValues}
+                                fileList={fileList}
+                                handleFileListChange={this.handleFileListChange}
+                                onEditorContentChange={this.onEditorContentChange}
+                                catalogInitVal={catalogInitVal}
+                                catalog_active={catalog_active}
+                                catalog_enable={catalog_enable}
+                                catalog_name={catalog_name}
+                                catalog_intro={catalog_intro}
+                                catalog_description={catalog_description}
+                            ></CatalogEffect>
+
+                        </CardBody>
+                    </Card>
+
+                </Col>
+            </Row>
+        </React.Fragment>
+    }
+}
+
+
+export default Board;

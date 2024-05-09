@@ -1,0 +1,25 @@
+/**
+ * Fetch data from given url
+ * @param {*} url
+ * @param {*} options
+ */
+const fetchJSON = (url, options = {}) => {
+    return fetch(url, options)
+        .then(response => {
+            console.log('simulate response login url:', response);
+            if (!response.status === 200) {
+                throw response.json();
+            }
+            return response.json();
+        })
+        .then(json => {
+            console.log('simulate json login url:', json);
+            return json;
+        })
+        .catch(error => {
+            console.log('simulate error login url:', error);
+            throw error;
+        });
+};
+
+export { fetchJSON };

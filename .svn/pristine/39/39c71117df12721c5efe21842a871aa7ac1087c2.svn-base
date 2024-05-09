@@ -1,0 +1,154 @@
+/* eslint-disable react/style-prop-object */
+import React, { Component } from 'react';
+import { Row, Col, Card, CardBody, Media } from 'reactstrap';
+import ImageUpload from './ImageHandler'
+import Select from 'react-select';
+
+class LeftSettings extends Component {
+    // eslint-disable-next-line no-useless-constructor
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+
+        return <React.Fragment>
+            <Card >
+                <CardBody style={{ backgroundColor: "#f7f7f7" }}>
+                    <Row>
+                        <Col>
+                            <React.Fragment>
+                                <Media>
+                                    <Media body >
+                                        <h6 className="mt-0 mb-2 header-title">Category thumbnail</h6>
+                                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                            Set the category thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted</p>
+                                        <ImageUpload></ImageUpload>
+                                    </Media>
+
+                                </Media>
+                                <Media>
+                                    <label className="badge badge-primary mr-1">Age: 12</label>
+                                    <label className="badge badge-primary mr-1">Level:3</label>
+                                </Media>
+                                {/* <Media className="mt-4 text-center">
+                                    <Media body style={{ margin: "auto", flex: "none" }}>
+                                        DESCRIPTION
+                                    </Media>
+                                </Media> */}
+                            </React.Fragment>
+                        </Col>
+
+                    </Row>
+                </CardBody>
+            </Card>
+
+            <Card >
+                <CardBody style={{ backgroundColor: "#f7f7f7" }}>
+                    <Row>
+                        <Col>
+                            <React.Fragment>
+                                <Media>
+                                    <Media body >
+                                        <h6 className="mt-0 mb-2 header-title">Select Stores</h6>
+                                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                            Set the category based on the available stores</p>
+
+                                        <Select
+                                            className="mb-3 react-select"
+                                            classNamePrefix="react-select"
+                                            options={[
+                                                { value: 'chocolate', label: 'Chocolate' },
+                                                { value: 'strawberry', label: 'Strawberry' },
+                                                { value: 'vanilla', label: 'Vanilla' },
+                                            ]}></Select>
+                                    </Media>
+
+                                </Media>
+                                <Media>
+                                    <label className="badge badge-primary mr-1">Age: 12</label>
+                                    <label className="badge badge-primary mr-1">Level:3</label>
+                                </Media>
+
+                            </React.Fragment>
+                        </Col>
+
+                    </Row>
+                </CardBody>
+            </Card>
+
+            <Card >
+                <CardBody style={{ backgroundColor: "#f7f7f7" }}>
+                    <Row>
+                        <Col>
+                            <React.Fragment>
+                                <Media>
+                                    <Media body >
+                                        <h6 className="mt-0 mb-2 header-title">Select Collections</h6>
+                                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                            Set the category based on the available collections</p>
+
+                                        <Select
+                                            isMulti={true}
+                                            options={[
+                                                { value: 'chocolate', label: 'Chocolate' },
+                                                { value: 'strawberry', label: 'Strawberry' },
+                                                { value: 'vanilla', label: 'Vanilla' },
+                                            ]}
+                                            className="react-select mt-1 mb-3"
+                                            classNamePrefix="react-select"></Select>
+                                    </Media>
+
+                                </Media>
+                                <Media>
+                                    <label className="badge badge-primary mr-1">Age: 12</label>
+                                    <label className="badge badge-primary mr-1">Level:3</label>
+                                </Media>
+
+                            </React.Fragment>
+                        </Col>
+
+                    </Row>
+                </CardBody>
+            </Card>
+
+            <Card >
+                <CardBody style={{ backgroundColor: "#f7f7f7" }}>
+                    <Row>
+                        <Col>
+                            <React.Fragment>
+                                <Media>
+                                    <Media body >
+                                        <h6 className="mt-0 mb-2 header-title">Select Template</h6>
+                                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                            Set the category based on the available templates</p>
+
+                                        <Select
+                                            className="mb-3 react-select"
+                                            classNamePrefix="react-select"
+                                            options={[
+                                                { value: 'chocolate', label: 'Chocolate' },
+                                                { value: 'strawberry', label: 'Strawberry' },
+                                                { value: 'vanilla', label: 'Vanilla' },
+                                            ]}></Select>
+                                    </Media>
+
+                                </Media>
+                                <Media>
+                                    {/* <label className="badge badge-primary mr-1">Age: 12</label>
+                                    <label className="badge badge-primary mr-1">Level:3</label> */}
+                                </Media>
+
+                            </React.Fragment>
+                        </Col>
+
+                    </Row>
+                </CardBody>
+            </Card>
+
+        </React.Fragment>
+    }
+}
+
+
+export default LeftSettings;

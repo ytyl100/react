@@ -1,0 +1,23 @@
+{
+    "version": 3,
+    "sources": [
+        "components/Footer.js"
+    ],
+    "names": [
+        "Footer",
+        "Component",
+        "render",
+        "React",
+        "createElement",
+        "className",
+        "href",
+        "target",
+        "rel"
+    ],
+    "mappings": "qHAAA,2BAKA,MAAMA,UAAeC,YAEjBC,SACI,OACIC,IAAAC,cAAA,UAAQC,UAAU,UACdF,IAAAC,cAAA,OAAKC,UAAU,mBACXF,IAAAC,cAAA,OAAKC,UAAU,OACXF,IAAAC,cAAA,OAAKC,UAAU,UAAS,uDACkCF,IAAAC,cAAA,KAAGC,UAAU,2CAA6C,MAC5GF,IAAAC,cAAA,KAAGE,KAAK,0BAA0BC,OAAO,SAASC,IAAI,sBAAsBH,UAAU,QAAO,oBAS9GL",
+    "file": "static/js/16.87fa36a1.chunk.js",
+    "sourcesContent": [
+        "import React, { Component } from 'react';\n\n/**\n * Renders the Footer\n */\nclass Footer extends Component {\n\n    render() {\n        return (\n            <footer className=\"footer\">\n                <div className=\"container-fluid\">\n                    <div className=\"row\">\n                        <div className=\"col-12\">\n                            2019 &copy; xiahe. All Rights Reserved. Crafted with <i className='uil uil-heart text-danger font-size-12'></i> by \n                                <a href=\"https://coderthemes.com\" target=\"_blank\" rel=\"noopener noreferrer\" className=\"ml-1\">Coderthemes</a>\n                        </div>\n                    </div>\n                </div>\n            </footer>\n        )\n    }\n}\n\nexport default Footer;"
+    ],
+    "sourceRoot": ""
+}

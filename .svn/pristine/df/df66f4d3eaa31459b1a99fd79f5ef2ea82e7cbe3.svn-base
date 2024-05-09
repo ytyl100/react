@@ -1,0 +1,688 @@
+import React, { useState } from 'react';
+import { Media } from 'reactstrap';
+import RichTextEditor from '../../../components/RichTextEditor';
+import ImageUpload from './ImageHandler';
+
+import {
+    AutoComplete,
+    Button,
+    Cascader,
+    Switch,
+    Form,
+    Input,
+    Select,
+    TreeSelect,
+    InputNumber,
+    Drawer,
+    Space,
+    DatePicker
+} from 'antd';
+
+const { Option } = Select;
+const residences = [
+    {
+        value: 'zhejiang',
+        label: 'Zhejiang',
+        children: [
+            {
+                value: 'hangzhou',
+                label: 'Hangzhou',
+                children: [
+                    {
+                        value: 'xihu',
+                        label: 'West Lake',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        value: 'jiangsu',
+        label: 'Jiangsu',
+        children: [
+            {
+                value: 'nanjing',
+                label: 'Nanjing',
+                children: [
+                    {
+                        value: 'zhonghuamen',
+                        label: 'Zhong Hua Men',
+                    },
+                ],
+            },
+        ],
+    },
+];
+const formItemLayout = {
+    labelCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 8,
+        },
+    },
+    wrapperCol: {
+        xs: {
+            span: 24,
+        },
+        sm: {
+            span: 16,
+        },
+    },
+};
+const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0,
+        },
+        sm: {
+            span: 16,
+            offset: 8,
+        },
+    },
+};
+const ProductBase = ({ onFinish, handleFileListChange, fileList }) => {
+    const [form] = Form.useForm();
+    const { RangePicker } = DatePicker;
+    const treeData = [
+        {
+            title: 'Node 1',
+            value: 'node1',
+            children: [
+                {
+                    title: 'Child Node 1',
+                    value: 'child1',
+                },
+                {
+                    title: 'Child Node 2',
+                    value: 'child2',
+                },
+            ],
+        },
+        {
+            title: 'Node 2',
+            value: 'node2',
+        },
+    ];
+
+
+    const suffixSelector = (
+        <Form.Item name="suffix_price" noStyle>
+            <Select
+                style={{
+                    width: 70,
+                }}
+            >
+                <Option value="USD">$</Option>
+                <Option value="CNY">¥</Option>
+            </Select>
+        </Form.Item>
+    );
+    const suffixWeightSelector = (
+        <Form.Item name="suffix_weight" noStyle>
+            <Select
+                style={{
+                    width: 70,
+                }}
+            >
+                <Option value="lbs">磅</Option>
+                <Option value="kgs">公斤</Option>
+            </Select>
+        </Form.Item>
+    );
+    const [autoCompleteResult, setAutoCompleteResult] = useState([]);
+    const onWebsiteChange = (value) => {
+        if (!value) {
+            setAutoCompleteResult([]);
+        } else {
+            setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
+        }
+    };
+    const websiteOptions = autoCompleteResult.map((website) => ({
+        label: website,
+        value: website,
+    }));
+
+    const [DrawerPrice, setPriceSetting] = useState(false);
+    const [DrawerStore, setStoreSetting] = useState(false);
+    const [DrawerVideo, setVideoSetting] = useState(false);
+
+    const openPrice = () => {
+        setPriceSetting(true);
+    }
+    const openStore = () => {
+        setStoreSetting(true);
+    }
+    const openVideo = () => {
+        setVideoSetting(true);
+    }
+    const closePrice = () => {
+        setPriceSetting(false);
+    }
+    const closeStore = () => {
+        setStoreSetting(false);
+    }
+    const closeVideo = () => {
+        setVideoSetting(false);
+    }
+
+    const rangeConfig = {
+        rules: [
+            {
+                type: 'array',
+                required: true,
+                message: 'Please select time!',
+            },
+        ],
+    };
+
+    return (
+        <Form
+            {...formItemLayout}
+            form={form}
+            name="register"
+            onFinish={onFinish}
+            initialValues={{
+                suffix_weight: 'kgs',
+                suffix_price: 'USD',
+                activate_product: true,
+            }}
+            labelCol={{
+                span: 4,
+            }}
+            wrapperCol={{
+                span: 18,
+            }}
+            scrollToFirstError
+        >
+            <Media className="mt-2 mb-2 p-3" style={{ backgroundColor: "#fff", fontSize: "15px" }}>
+                <Media body >
+                    <h6 className="mt-0 mb-2 header-title">产品信息的录入</h6>
+                    <hr></hr>
+                    <Form.Item name="activate_product" label="激活产品" valuePropName="checked" className="mt-0 mb-0 p-2">
+                        <Switch />
+                    </Form.Item>
+                    <Form.Item
+                        name="catalogs"
+                        label="选择产品类目"
+                        rules={[{ required: true, message: '请选择至少一个产品类目' }]}
+                    >
+                        <TreeSelect
+                            treeData={treeData}
+                            treeCheckable={true}
+                            treeCheckStrictly={true}
+                            showCheckedStrategy={TreeSelect.SHOW_PARENT}
+                            placeholder="请选择类目"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="name"
+                        label="产品名称"
+                        tooltip="当前的产品名称是什么?"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入产品名称',
+                                whitespace: true,
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="sku"
+                        label="产品SKU"
+                        tooltip="当前的产品SKU是什么?"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入产品SKU',
+                                whitespace: true,
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="unit_price"
+                        label="产品单价"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入产品单价',
+                            },
+                        ]}
+                    >
+                        <InputNumber
+                            addonAfter={suffixSelector}
+                            style={{
+                                width: '25%',
+                            }}
+                        />
+                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                            特殊价格配置</p>
+                        <Button className="mt-2 mb-2"
+                            htmlType="button"
+                            type="primary"
+                            style={{
+                                margin: '0 8px',
+                            }}
+                            onClick={openPrice}
+                        >价格配置 </Button>
+                    </Form.Item>
+
+                    <Form.Item
+                        name="tax_option"
+                        label="产品税目"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请选择税目',
+                            },
+                        ]}
+                    >
+                        <Select placeholder="请选择税目">
+                            <Option value="tax" >含税</Option>
+                            <Option value="non-tax">不含税</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item name="unit_store"
+                        label="产品库存"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入产品库存',
+                            },
+                        ]}>
+                        <InputNumber style={{
+                            width: '25%',
+                        }} />
+                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                            产品库存配置</p>
+                        <Button className="mt-2 mb-2"
+                            htmlType="button"
+                            type="primary"
+                            style={{
+                                margin: '0 8px',
+                            }}
+                            onClick={openStore}
+                        >产品库存配置 </Button>
+                    </Form.Item>
+                    <Form.Item
+                        name="storage_setting"
+                        label="库存状况"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请选择库存状况',
+                            },
+                        ]}
+                    >
+                        <Select placeholder="请选择库存状况">
+                            <Option value="tax">有库存</Option>
+                            <Option value="non-tax">无库存</Option>
+                        </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                        name="weight"
+                        label="产品重量"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入产品重量',
+                            },
+                        ]}
+                    >
+                        <InputNumber
+                            addonAfter={suffixWeightSelector}
+                            style={{
+                                width: '25%',
+                            }}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="display_area"
+                        label="展示区域"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请选择展示区域',
+                            },
+                        ]}
+                    >
+                        <Select placeholder="请选择展示区域">
+                            <Option value="catalog_disp">展示类目</Option>
+                            <Option value="search_disp">展示搜索</Option>
+                            <Option value="non-catalog_disp">不单独展示</Option>
+                        </Select>
+                    </Form.Item>
+                    <h6 className="mt-0 mb-2 header-title">产品详细资料的录入</h6>
+                    <hr></hr>
+
+                    <Form.Item
+                        name="image"
+                        label="类目图片"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请上传图片',
+                            },
+                        ]}
+                    >
+                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                            只允许 *.png, *.jpg and *.jpeg 图片格式</p>
+                        <ImageUpload onFileListChange={handleFileListChange} fileList={fileList}></ImageUpload>
+                    </Form.Item>
+
+                    <Form.Item
+                        name="intro"
+                        label="产品介绍"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入产品介绍',
+                            },
+                        ]}
+                    >
+                        <Input.TextArea showCount maxLength={100} />
+                    </Form.Item>
+                    <Form.Item
+                        name="description"
+                        label="产品详细描述"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入产品详细描述',
+                            },
+                        ]}
+                    >
+                        <RichTextEditor onEditorContentChange={() => { }} />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="residence"
+                        label="产品所在城市"
+                        rules={[
+                            {
+                                type: 'array',
+                                required: true,
+                                message: '请输入产品所在的城市',
+                            },
+                        ]}
+                    >
+                        <Cascader options={residences} />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="website"
+                        label="视频配置"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入网站地址',
+                            },
+                        ]}
+                    >
+                        <AutoComplete options={websiteOptions} onChange={onWebsiteChange} placeholder="http://">
+                            <Input />
+                        </AutoComplete>
+                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                            请配置视频</p>
+                        <Button className="mt-2 mb-2"
+                            htmlType="button"
+                            type="primary"
+                            style={{
+                                margin: '0 8px',
+                            }}
+                            onClick={openVideo}
+                        >视频配置 </Button>
+                    </Form.Item>
+                    <Form.Item
+                        name="vendor"
+                        label="所属供货商"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请选择你的供货商',
+                            },
+                        ]}
+                    >
+                        <Select placeholder="请选择供货商">
+                            <Option value="winmax">winmax</Option>
+                            <Option value="belle">belle</Option>
+                            <Option value="other">Other</Option>
+                        </Select>
+                    </Form.Item>
+
+                    <Form.Item {...tailFormItemLayout}>
+                        <Button type="primary" htmlType="submit">
+                            提交信息
+                        </Button>
+                    </Form.Item>
+
+                    <Drawer
+                        title="配置特殊产品价格"
+                        placement='right'
+                        width={800}
+                        onClose={closePrice}
+                        open={DrawerPrice}
+                        extra={
+                            <Space>
+                                <Button onClick={closePrice}>取消</Button>
+                                <Button type="primary" onClick={closePrice}>
+                                    保存
+                                </Button>
+                            </Space>
+                        }
+                    >
+                        <h6 className="mt-0 mb-2 header-title">产品优惠价格设置</h6>
+                        <hr></hr>
+                        <Form.Item
+                            name="unit_promote_price"
+                            label="产品优惠价格"
+                        >
+                            <InputNumber
+                                addonAfter={suffixSelector}
+                                style={{
+                                    width: '50%',
+                                }}
+                            />
+                            <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                特殊价格配置</p>
+                        </Form.Item>
+                        <Form.Item name="price_valid_range" label="优惠时间范围" {...rangeConfig}>
+                            <RangePicker />
+                        </Form.Item>
+                        <Form.Item
+                            name="unit_cost"
+                            label="产品成本"
+                        >
+                            <InputNumber
+                                addonAfter={suffixSelector}
+                                style={{
+                                    width: '50%',
+                                }}
+                            />
+                            <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                产品成本配置</p>
+                        </Form.Item>
+                    </Drawer>
+
+                    <Drawer
+                        title="配置特殊产品库存"
+                        placement='right'
+                        width={800}
+                        onClose={closeStore}
+                        open={DrawerStore}
+                        extra={
+                            <Space>
+                                <Button onClick={closeStore}>取消</Button>
+                                <Button type="primary" onClick={closeStore}>
+                                    保存
+                                </Button>
+                            </Space>
+                        }
+                    >
+                        <h6 className="mt-0 mb-2 header-title">产品库存设置</h6>
+                        <hr></hr>
+                        <Form.Item
+                            name="unit_storage_num"
+                            label="产品库存数量"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入产品库存数量',
+                                },
+                            ]}
+                        >
+                            <InputNumber
+                                style={{
+                                    width: '50%',
+                                }}
+                            />
+                            <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                配置最低产品库存数量</p>
+                        </Form.Item>
+                        <Form.Item
+                            name="unit_outofstock"
+                            label="最低产品库存"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入最低产品库存标准',
+                                },
+                            ]}
+                        >
+                            <InputNumber
+                                style={{
+                                    width: '50%',
+                                }}
+                            />
+                            <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                最低产品库存数量配置</p>
+                        </Form.Item>
+                        <Form.Item
+                            name="unit_min_shoppingcart"
+                            label="最低产品购物篮数量"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入最低产品购物篮数量配置',
+                                },
+                            ]}
+                        >
+                            <InputNumber
+                                style={{
+                                    width: '50%',
+                                }}
+                            />
+                            <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                最低产品购物篮数量配置</p>
+                        </Form.Item>
+                        <Form.Item
+                            name="unit_max_shoppingcart"
+                            label="最高产品购物篮数量"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入最高产品购物篮数量配置',
+                                },
+                            ]}
+                        >
+                            <InputNumber
+                                style={{
+                                    width: '50%',
+                                }}
+                            />
+                            <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                最高产品购物篮数量配置</p>
+                        </Form.Item>
+                    </Drawer>
+
+                    <Drawer
+                        title="配置特殊视频配置"
+                        placement='right'
+                        width={800}
+                        onClose={closeVideo}
+                        open={DrawerVideo}
+                        extra={
+                            <Space>
+                                <Button onClick={closeVideo}>取消</Button>
+                                <Button type="primary" onClick={closeVideo}>
+                                    保存
+                                </Button>
+                            </Space>
+                        }
+                    >
+                        <h6 className="mt-0 mb-2 header-title">视频设置</h6>
+                        <hr></hr>
+                        <Form.Item
+                            name="video_url"
+                            label="视频URL网址"
+                            tooltip="当前的视频URL网址是什么?"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入视频URL网址名称',
+                                    whitespace: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            name="video_title"
+                            label="视频标题"
+                            tooltip="当前的视频名称是什么?"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入产品视频名称',
+                                    whitespace: true,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="video_intro"
+                            label="产品视频介绍"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请输入产品视频介绍',
+                                },
+                            ]}
+                        >
+                            <Input.TextArea showCount maxLength={100} />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="video_preview_image"
+                            label="预览图片"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '请上传预览图片',
+                                },
+                            ]}
+                        >
+                            <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                只允许 *.png, *.jpg and *.jpeg 图片格式</p>
+                            <ImageUpload onFileListChange={handleFileListChange} fileList={fileList}></ImageUpload>
+                        </Form.Item>
+
+                    </Drawer>
+
+                </Media>
+            </Media>
+        </Form>
+    );
+};
+
+export default ProductBase;

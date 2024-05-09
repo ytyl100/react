@@ -1,0 +1,147 @@
+/* eslint-disable react/style-prop-object */
+import React, { Component } from 'react';
+import { Row, Col, Card, CardBody, Media } from 'reactstrap';
+import RichTextEditor from '../../../components/RichTextEditor';
+import { Form, Input, Button, Space } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import ImageUpload from './ImageHandler'
+import Select from 'react-select';
+
+class LeftSettings extends Component {
+    // eslint-disable-next-line no-useless-constructor
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const initialContent = "<p>This is a task description with markup support</p><ul><li>Select a text to reveal the toolbar.</li><li>Edit rich document on-the-fly, so elastic!</li></ul><p>End of air-mode area</p>";
+
+        return <React.Fragment>
+            <Row>
+                <Col md={12}>
+                    <Card >
+                        <CardBody style={{ backgroundColor: "#f7f7f7" }}>
+                            <Row>
+                                <Col>
+                                    <React.Fragment>
+                                        <Form
+                                            labelCol={{
+                                                span: 2,
+                                            }}
+                                            wrapperCol={{
+                                                span: 24,
+                                            }}
+                                        >
+                                            <Media className="mt-2 mb-2 p-3" style={{ backgroundColor: "#fff" }}>
+                                                <Media body >
+                                                    <Form.Item className="mt-0 mb-0 p-2">
+                                                        <h6 className="mt-0 mb-2 header-title">Category thumbnail</h6>
+                                                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                                            Set the category thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted</p>
+                                                        <ImageUpload></ImageUpload>
+                                                    </Form.Item>
+
+                                                    <Form.Item className="mt-0 mb-0 p-2">
+                                                        <h4 className="header-title ml-2 mb-1">Category Description</h4>
+                                                        <p className="mt-1 mb-3">
+                                                            DraftJS is a light-weight, simple, embeddable, and beautiful editor
+                                                        </p>
+
+                                                        <RichTextEditor onEditorContentChange={() => { }} initialContent={initialContent} />
+
+                                                    </Form.Item>
+
+                                                    <Form.Item className="mt-0 mb-0 p-2">
+                                                        <h6 className="mt-0 mb-2 header-title">Select Template</h6>
+                                                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                                            Set the category based on the available templates</p>
+
+                                                        <Select
+                                                            className="mb-3 react-select"
+                                                            classNamePrefix="react-select"
+                                                            options={[
+                                                                { value: 'chocolate', label: 'Chocolate' },
+                                                                { value: 'strawberry', label: 'Strawberry' },
+                                                                { value: 'vanilla', label: 'Vanilla' },
+                                                            ]}></Select>
+                                                    </Form.Item>
+
+                                                    <Form.Item className="mt-0 mb-0 p-2">
+                                                        <h6 className="mt-0 mb-2 header-title">Variant</h6>
+                                                        <p className="mt-1 mb-3" style={{ fontSize: "12px" }}>
+                                                            Set the category based on the available templates</p>
+                                                        <Form.List name="users">
+
+                                                            {(fields, { add, remove }) => (
+                                                                <>
+                                                                    {fields.map(({ key, name, ...restField }) => (
+                                                                        <Space
+                                                                            key={key}
+                                                                            style={{
+                                                                                display: 'flex',
+                                                                                marginBottom: 8,
+                                                                            }}
+                                                                            align="baseline"
+                                                                        >
+                                                                            <Form.Item
+                                                                                {...restField}
+                                                                                name={[name, 'first']}
+                                                                                rules={[
+                                                                                    {
+                                                                                        required: true,
+                                                                                        message: 'Missing first name',
+                                                                                    },
+                                                                                ]}
+                                                                            >
+                                                                                <Input placeholder="First Name" />
+                                                                            </Form.Item>
+                                                                            <Form.Item
+                                                                                {...restField}
+                                                                                name={[name, 'last']}
+                                                                                rules={[
+                                                                                    {
+                                                                                        required: true,
+                                                                                        message: 'Missing last name',
+                                                                                    },
+                                                                                ]}
+                                                                            >
+                                                                                <Input placeholder="Last Name" />
+                                                                            </Form.Item>
+                                                                            <MinusCircleOutlined onClick={() => remove(name)} />
+                                                                        </Space>
+                                                                    ))}
+                                                                    <Form.Item>
+                                                                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                                                            Add field
+                                                                        </Button>
+                                                                    </Form.Item>
+                                                                </>
+                                                            )}
+                                                        </Form.List>
+                                                    </Form.Item>
+                                                    <Form.Item>
+                                                        <Button type="primary" htmlType="submit">
+                                                            Submit
+                                                        </Button>
+                                                    </Form.Item>
+
+                                                </Media>
+                                            </Media>
+                                        </Form>
+
+                                    </React.Fragment>
+                                </Col>
+
+                            </Row>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+
+
+        </React.Fragment>
+    }
+}
+
+
+export default LeftSettings;

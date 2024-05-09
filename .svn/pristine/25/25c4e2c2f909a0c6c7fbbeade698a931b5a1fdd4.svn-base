@@ -1,0 +1,79 @@
+import { fetchJSON } from "./api";
+import './../../src/config';
+
+const token = 'your_bearer_token';
+const url = global.api.url;
+
+const getApi = (url, payload) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    const response = fetchJSON(url, options);
+    return response;
+}
+
+const postApi = (url, payload) => {
+    const options = {
+        body: JSON.stringify(payload),
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    const response = fetchJSON(url, options);
+    return response;
+}
+
+const deleteApi = (url, payload) => {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    const response = fetchJSON(url, options);
+    return response;
+}
+
+const updateApi = (url, payload) => {
+    const options = {
+        body: JSON.stringify(payload),
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    const response = fetchJSON(url, options);
+    return response;
+}
+
+const fileUpload=(fileBase64, fileMeta) =>{
+    let cookies = new Cookies();
+    let token = cookies.get('token');
+    let url = global.api.url + "attachments";
+    let formdata = new FormData();
+    formdata.append('type', 'base64');
+    formdata.append('upload_files', fileBase64);
+    formdata.append('filename', fileMeta.fileName);
+    let options = {
+      body: formdata,
+      method: "POST",
+      headers: {
+        'Authorization': token,
+      },
+    }
+
+    var res = await fetchJSON(url, options);
+    console.log(res);
+    if (res && res.id) {
+      return res;
+    }
+    return null;
+  }
+
+export { updateApi, deleteApi, postApi, getApi }

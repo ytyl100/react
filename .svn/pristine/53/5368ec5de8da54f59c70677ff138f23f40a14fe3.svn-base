@@ -1,0 +1,258 @@
+/* eslint-disable react/style-prop-object */
+import React, { Component, useState } from 'react';
+import { Space, Switch, Table } from 'antd';
+
+import {
+    Row, Col, Card, CardBody, Input, Button, ButtonGroup, UncontrolledTooltip, Media
+} from 'reactstrap';
+import ToolkitProvider, { Search, CSVExport } from 'react-bootstrap-table2-toolkit';
+import PageTitle from '../../components/PageTitle';
+
+const columns = [
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        width: '40%',
+        render: (text, record) => {
+            // const isFolder = record.type === 'folder';
+            // const imageSrc = isFolder ? record.image : record.image;
+            const imageSrc = record.image;
+            //return <img src={imageSrc} alt={text} />;
+            return <div>
+                <Media className="mt-3 p-1" width="300px">
+                    <img src={imageSrc} className="mr-2 rounded-circle" height="36" alt="" />
+                    <Media body>
+                        <h5 className="mt-0 mb-0 font-size-14">
+                            shinne cooker
+                        </h5>
+                        <p className="mt-1 mb-0 text-muted">Our new project brand new shinne cooker</p>
+                    </Media>
+                </Media>
+            </div>
+        },
+    },
+    {
+        title: 'ID',
+        dataIndex: 'ID',
+        key: 'ID',
+        width: '5%',
+    },
+    {
+        title: 'Address',
+        dataIndex: 'address',
+        width: '15%',
+        key: 'address',
+    },
+    {
+        title: 'action',
+        dataIndex: 'action',
+        key: 'action',
+        render: (text, record) => {
+            // const isFolder = record.type === 'folder';
+            // const imageSrc = isFolder ? record.image : record.image;
+            return <div>
+                <ButtonGroup className="mr-1">
+                    <Button id="archive" color="light">
+                        <i className="uil uil-archive-alt"></i>
+                    </Button>
+                    <UncontrolledTooltip placement="top" target="archive">Archived</UncontrolledTooltip>
+                    <Button id="spam" color="light">
+                        <i className="uil uil-exclamation-octagon"></i>
+                    </Button>
+                    <UncontrolledTooltip placement="top" target="spam">Mark as spam</UncontrolledTooltip>
+                    <Button id="delete" color="light">
+                        <i className="uil uil-trash-alt"></i>
+                    </Button>
+                    <UncontrolledTooltip placement="top" target="delete">Delete</UncontrolledTooltip>
+                </ButtonGroup>
+            </div>
+        },
+    },
+];
+
+const data = [
+    {
+        key: 1,
+        name: 'John Brown sr.',
+        image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+        ID: 60,
+        address: 'New York No. 1 Lake Park',
+        action: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+        children: [
+            {
+                key: 11,
+                name: 'John Brown',
+                image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+                ID: 42,
+                address: 'New York No. 2 Lake Park',
+                action: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+            },
+            {
+                key: 12,
+                name: 'John Brown jr.',
+                image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+                ID: 30,
+                address: 'New York No. 3 Lake Park',
+                action: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+                children: [
+                    {
+                        key: 121,
+                        name: 'Jimmy Brown',
+                        image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+                        ID: 16,
+                        address: 'New York No. 3 Lake Park',
+                        action: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+                    },
+                ],
+            },
+            {
+                key: 13,
+                name: 'Jim Green sr.',
+                image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+                ID: 72,
+                address: 'London No. 1 Lake Park',
+                action: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+                children: [
+                    {
+                        key: 131,
+                        name: 'Jim Green',
+                        image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+                        ID: 42,
+                        address: 'London No. 2 Lake Park',
+                        action: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+                        children: [
+                            {
+                                key: 1311,
+                                name: 'Jim Green jr.',
+                                image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+                                ID: 25,
+                                address: 'London No. 3 Lake Park',
+                                action: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+                            },
+                            {
+                                key: 1312,
+                                name: 'Jimmy Green sr.',
+                                image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+                                ID: 18,
+                                address: 'London No. 4 Lake Park',
+                                action: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        key: 2,
+        name: 'Joe Black',
+        image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+        ID: 32,
+        address: 'Sydney No. 1 Lake Park',
+        action: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
+    },
+];
+
+// rowSelection objects indicates the need for row selection
+const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    onSelect: (record, selected, selectedRows) => {
+        console.log(record, selected, selectedRows);
+    },
+    onSelectAll: (selected, selectedRows, changeRows) => {
+        console.log(selected, selectedRows, changeRows);
+    },
+};
+
+
+
+class CategoryItems extends Component {
+    // eslint-disable-next-line no-useless-constructor
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+
+        const { SearchBar } = Search;
+        const { ExportCSVButton } = CSVExport;
+        return <React.Fragment>
+            <Row className="page-title">
+                <Col md={12}>
+                    <PageTitle
+                        breadCrumbItems={[
+                            { label: 'Apps', path: '/apps/tasks/list' },
+                            { label: 'Tasks', path: '/apps/tasks/list', active: true },
+                        ]}
+                        title={'品牌管理'}
+                    />
+                </Col>
+            </Row>
+
+            {/* filter panel */}
+            <Row>
+                <Col xl={12}>
+
+                    <Card>
+                        <CardBody>
+                            <p class="sub-header">
+                                工作部门管理可新建立权限组、用户组，并对权限组的菜单导航功能，模块管理功能权限进行设置之后，按照各个组将用户组分配到对应权限组.
+                                工作部门管理分为核心管理员与普通组成员，核心管理成员拥有当前模块所有功能并可以分配组员，组员可以拥有各个级别的管理权限但是没有组员分配权限
+                            </p>
+                            <ToolkitProvider
+                                bootstrap4
+                                keyField="id"
+                                data={data}
+                                columns={columns}
+                                search
+                                exportCSV={{ onlyExportFiltered: true, exportAll: false }}>
+                                {props => (
+                                    <React.Fragment>
+                                        <Row>
+                                            <Col xl={2}>
+                                                <SearchBar {...props.searchProps} />
+                                            </Col>
+                                            <Col xl={2} className="text-left">
+
+                                            </Col>
+                                            <Col xl={8} className="text-right">
+                                                <div class="btn-group mb-2">
+                                                    <ExportCSVButton {...props.csvProps} className="btn btn-primary">
+                                                        导出 CSV
+                                                    </ExportCSVButton >
+                                                    <Button className="btn btn-primary btn btn-secondary">
+                                                        导入
+                                                    </Button>
+                                                    <Button className="btn btn-primary btn btn-secondary">
+                                                        打印
+                                                    </Button>
+                                                </div>
+                                            </Col>
+                                        </Row>
+
+                                        <Table
+                                            columns={columns}
+                                            rowSelection={{
+                                                ...rowSelection,
+                                            }}
+                                            dataSource={data}
+                                        />
+                                    </React.Fragment>
+                                )}
+                            </ToolkitProvider>
+
+
+                        </CardBody>
+                    </Card>
+
+                </Col>
+            </Row>
+        </React.Fragment>
+    }
+}
+
+
+export default CategoryItems;

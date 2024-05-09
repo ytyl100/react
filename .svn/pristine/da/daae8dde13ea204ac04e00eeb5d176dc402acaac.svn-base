@@ -1,0 +1,217 @@
+/* eslint-disable react/style-prop-object */
+import React, { Component } from 'react';
+import {
+    Row, Col, Card, CardBody,
+} from 'reactstrap';
+import { Avatar, Skeleton, Button, List } from 'antd';
+import AutocompleteSearch from '../utilities/AutocompleteSearch';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+
+
+const records = [
+    {
+        id: 1001,
+        slug: 'winmax-sport',
+        intro: '华南地区最大专业体育用品品牌',
+        origin: '广州市体育西路123号之一',
+        name: 'winmax sport',
+        image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+        price: 10,
+        quantity: 20,
+    },
+    {
+        id: 1002,
+        slug: 'belle-wigs',
+        intro: '华南地区最大专业体育用品品牌',
+        origin: '广州市体育西路123号之一',
+        name: 'belle wigs',
+        image: 'https://reactstorefronts.com/static/img/brand/1.jpg',
+        price: 10,
+        quantity: 20,
+    },
+    {
+        id: 1003,
+        slug: 'gardenarts',
+        intro: '华南地区最大专业体育用品品牌',
+        origin: '广州市体育西路123号之一',
+        name: 'gardenarts',
+        image: '../../assets/images/users/avatar-2.jpg',
+        price: 10,
+        quantity: 20,
+    },
+    {
+        id: 1004,
+        slug: 'nova-wigs',
+        intro: '华南地区最大专业体育用品品牌',
+        origin: '广州市体育西路123号之一',
+        name: 'nova wigs',
+        image: 'assets/images/users/avatar-2.jpg',
+        price: 10,
+        quantity: 20,
+    },
+];
+
+
+class CatalogProducts extends Component {
+    // eslint-disable-next-line no-useless-constructor
+    constructor(props) {
+        super(props);
+        this.state = {
+            selected: [], // Array to store the selected row keys
+            storeData: records,
+            initLoading: true,
+            loading: false,
+            list: [],
+        };
+    }
+
+    componentDidMount = () => {
+
+        this.setState({
+            list: [
+                {
+                    "gender": "female",
+                    "name": { "title": "Miss", "first": "Viktorija", "last": "Danilović" },
+                    "email": "viktorija.danilovic@example.com",
+                    "picture": {
+                        "large": "https://randomuser.me/api/portraits/women/66.jpg",
+                        "medium": "https://randomuser.me/api/portraits/med/women/66.jpg",
+                        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/66.jpg"
+                    },
+                    "nat": "RS"
+                },
+                {
+                    "gender": "female", "name":
+                        { "title": "Miss", "first": "Zoey", "last": "Wells" },
+                    "email": "zoey.wells@example.com",
+                    "picture": {
+                        "large": "https://randomuser.me/api/portraits/women/2.jpg",
+                        "medium": "https://randomuser.me/api/portraits/med/women/2.jpg",
+                        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/2.jpg"
+                    },
+                    "nat": "US"
+                },
+                {
+                    "gender": "female",
+                    "name": { "title": "Mrs", "first": "Olivia", "last": "Macdonald" },
+                    "email": "olivia.macdonald@example.com",
+                    "picture": {
+                        "large": "https://randomuser.me/api/portraits/women/36.jpg",
+                        "medium": "https://randomuser.me/api/portraits/med/women/36.jpg",
+                        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/36.jpg"
+                    },
+                    "nat": "CA"
+                },
+                {
+                    "gender": "male",
+                    "name": { "title": "Mr", "first": "آرش", "last": "نكو نظر" },
+                    "email": "arsh.nkwnzr@example.com",
+                    "picture": {
+                        "large": "https://randomuser.me/api/portraits/men/50.jpg",
+                        "medium": "https://randomuser.me/api/portraits/med/men/50.jpg",
+                        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/50.jpg"
+                    },
+                    "nat": "IR"
+                },
+                {
+                    "gender":
+                        "female",
+                    "name": { "title": "Miss", "first": "Tammy", "last": "Dixon" },
+                    "email": "tammy.dixon@example.com",
+                    "picture": {
+                        "large": "https://randomuser.me/api/portraits/women/14.jpg",
+                        "medium": "https://randomuser.me/api/portraits/med/women/14.jpg",
+                        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/14.jpg"
+                    },
+                    "nat": "AU"
+                }],
+        })
+    }
+
+    handleEditItem = (id) => {
+        this.props.history.push(`/ecommerce/brand/board/${id}`);
+    };
+
+    handleDelItem = (id) => {
+
+    };
+
+
+    handleBatchDelete = () => {
+        const updatedData = records.filter((row) => !this.state.selected.includes(row.id));
+        const remainData = records.filter((row) => this.state.selected.slice(row.id));
+
+        this.setState({ selected: [] }); // Clear selected rows
+        this.setState({ storeData: updatedData }); // Clear selected rows
+        console.log('update data:', updatedData);
+        console.log('remain data:', this.state.storeData);
+        // Do something with the updated data (e.g., update the data source, show a confirmation message)
+    };
+
+    render() {
+        const { initLoading, loading, list } = this.state;
+
+
+        const onLoadMore = () => {
+
+        };
+        const loadMore =
+            !initLoading && !loading ? (
+                <div
+                    style={{
+                        textAlign: 'center',
+                        marginTop: 12,
+                        height: 32,
+                        lineHeight: '32px',
+                    }}
+                >
+                    <Button onClick={onLoadMore}>loading more</Button>
+                </div>
+            ) : null;
+
+        return <React.Fragment>
+
+            {/* filter panel */}
+            <Row>
+                <Col xl={12}>
+
+                    <Card>
+                        <CardBody>
+                            <p className="sub-header">
+                                产品系列管理可以根据电商商家所拥有的在线销售的产品系列进行营销归类类目，拥有各自独立的库存与产品管理，也可以分配各自的产品类目；
+                            </p>
+                            <AutocompleteSearch></AutocompleteSearch>
+                            <hr></hr>
+                            <List
+                                className="demo-loadmore-list"
+                                loading={initLoading}
+                                itemLayout="horizontal"
+                                loadMore={loadMore}
+                                dataSource={list}
+                                renderItem={(item) => (
+                                    <List.Item
+                                        actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
+                                    >
+                                        <Skeleton avatar title={false} loading={item.loading} active>
+                                            <List.Item.Meta
+                                                avatar={<Avatar src={item.picture.large} />}
+                                                title={<a href="https://ant.design">{item.name?.last}</a>}
+                                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                            />
+                                            <div>content</div>
+                                        </Skeleton>
+                                    </List.Item>
+                                )}
+                            />
+
+                        </CardBody>
+                    </Card>
+
+                </Col>
+            </Row>
+        </React.Fragment>
+    }
+}
+
+
+export default CatalogProducts;
